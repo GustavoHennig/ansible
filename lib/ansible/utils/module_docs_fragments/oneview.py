@@ -33,7 +33,19 @@ options:
 
 notes:
     - "A sample configuration file for the config parameter can be found at:
-       https://github.com/HewlettPackard/oneview-ansible/blob/master/examples/oneview_config-rename.json"
+       U(https://github.com/HewlettPackard/oneview-ansible/blob/master/examples/oneview_config-rename.json)"
     - "Check how to use environment variables for configuration at:
-       https://github.com/HewlettPackard/oneview-ansible#environment-variables"
+       U(https://github.com/HewlettPackard/oneview-ansible#environment-variables)"
+    - "Additional Playbooks for the HPE OneView Ansible modules can be found at:
+       U(https://github.com/HewlettPackard/oneview-ansible/tree/master/examples)"
     '''
+
+    VALIDATEETAG = '''
+options:    
+    validate_etag:
+        description:
+            - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
+                for the resource matches the ETag provided in the data.
+        default: true
+        choices: ['true', 'false']
+'''

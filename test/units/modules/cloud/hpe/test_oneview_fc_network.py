@@ -19,8 +19,6 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import importlib
-import mock
 
 from ansible.modules.cloud.hpe.oneview_fc_network import (FcNetworkModule,
                                                           FC_NETWORK_CREATED,
@@ -28,7 +26,7 @@ from ansible.modules.cloud.hpe.oneview_fc_network import (FcNetworkModule,
                                                           FC_NETWORK_UPDATED,
                                                           FC_NETWORK_DELETED,
                                                           FC_NETWORK_ALREADY_ABSENT)
-from hpe_test_utils import PreloadedMocksBaseTestCaseV2
+from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
 
@@ -60,24 +58,14 @@ PARAMS_FOR_ABSENT = dict(
 
 
 class FcNetworkModuleSpec(unittest.TestCase,
-                          PreloadedMocksBaseTestCaseV2):
+                          OneViewBaseTestCase):
     """
-    PreloadedMocksBaseTestCaseV2 provides the mocks used in this test case
+    OneViewBaseTestCase provides the mocks used in this test case
     """
 
     def setUp(self):
-        self.configure_mocks(self)
+        self.configure_mocks(self, FcNetworkModule)
         self.resource = self.mock_ov_client.fc_networks
-
-    def test_main_function_should_call_run_method(self):
-        self.mock_ansible_module.params = {'config': 'config.json'}
-
-        module = importlib.import_module(FcNetworkModule.__module__)
-        main_func = getattr(module, 'main')
-
-        with mock.patch.object(FcNetworkModule, "run") as mock_run:
-            main_func()
-            mock_run.assert_called_once()
 
     def test_should_create_new_fc_network(self):
         self.resource.get_by.return_value = []
@@ -133,8 +121,7 @@ class FcNetworkModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=FC_NETWORK_DELETED,
-            ansible_facts={}
+            msg=FC_NETWORK_DELETED
         )
 
     def test_should_do_nothing_when_fc_network_not_exist(self):
@@ -146,8 +133,7 @@ class FcNetworkModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=FC_NETWORK_ALREADY_ABSENT,
-            ansible_facts={}
+            msg=FC_NETWORK_ALREADY_ABSENT
         )
 
 
