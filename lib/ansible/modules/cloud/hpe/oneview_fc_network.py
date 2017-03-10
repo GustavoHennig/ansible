@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
-ANSIBLE_METADATA = {'status': ['preview'],
+ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'committer',
                     'version': '1.0'}
 
@@ -37,22 +37,17 @@ options:
     state:
         description:
             - Indicates the desired state for the Fibre Channel Network resource.
-              'present' will ensure data properties are compliant with OneView.
-              'absent' will remove the resource from OneView, if it exists.
+              C(present) will ensure data properties are compliant with OneView.
+              C(absent) will remove the resource from OneView, if it exists.
         choices: ['present', 'absent']
     data:
         description:
             - List with the Fibre Channel Network properties.
         required: true
-    validate_etag:
-        description:
-            - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
-              for the resource matches the ETag provided in the data.
-        default: true
-        choices: ['true', 'false']
 
 extends_documentation_fragment:
     - oneview
+    - oneview.validateetag
 '''
 
 EXAMPLES = '''
@@ -87,7 +82,7 @@ fc_network:
 '''
 
 from ansible.module_utils.basic import *
-from ansible.module_utils.oneview import OneViewModuleBase, Comparator
+from ansible.module_utils.oneview import OneViewModuleBase, ResourceComparator
 
 FC_NETWORK_CREATED = 'FC Network created successfully.'
 FC_NETWORK_UPDATED = 'FC Network updated successfully.'
@@ -98,11 +93,13 @@ FC_NETWORK_ALREADY_ABSENT = 'Nothing to do.'
 
 class FcNetworkModule(OneViewModuleBase):
     def __init__(self):
+        
+        add_arg_spec = dict(data=dict(required=True, type='dict'))
 
-        super(FcNetworkModule, self).__init__(run_callback=self.run_internal,
-                                              validate_etag_support=True)
+        super(FcNetworkModule, self).__init__(additional_arg_spec=add_arg_spec,
+            validate_etag_support=True)
 
-    def run_internal(self):
+    def execute_module(self):
         resource = self.__get_by_name()
 
         if self.state == 'present':
@@ -110,47 +107,39 @@ class FcNetworkModule(OneViewModuleBase):
         elif self.state == 'absent':
             return self.__absent(resource)
 
-    def run_internal2(self):
-        resource = self.__get_by_name()
-        changed, msg, ansible_facts = False, '', {}
-        if self.state == 'present':
-            changed, msg, ansible_facts = self.__present(resource)
-        elif self.state == 'absent':
-            changed, msg, ansible_facts = self.__absent(resource)
-
-        return changed, msg, ansible_facts
-
     def __present(self, resource):
 
-        changed = False
+        result = {}
         if "newName" in self.data:
             self.data["name"] = self.data.pop("newName")
 
         if not resource:
             resource = self.oneview_client.fc_networks.create(self.data)
-            msg = FC_NETWORK_CREATED
-            changed = True
+            result['msg'] = FC_NETWORK_CREATED
+            result['changed'] = True
 
         else:
             merged_data = resource.copy()
             merged_data.update(self.data)
 
-            if Comparator.resource_compare(resource, merged_data):
-                msg = FC_NETWORK_ALREADY_EXIST
+            if ResourceComparator.compare(resource, merged_data):
+                result['msg'] = FC_NETWORK_ALREADY_EXIST
             else:
                 resource = self.oneview_client.fc_networks.update(merged_data)
-                changed = True
-                msg = FC_NETWORK_UPDATED
+                result['changed'] = True
+                result['msg'] = FC_NETWORK_UPDATED
 
-        return changed, msg, dict(fc_network=resource)
+        result["ansible_facts"] = dict(fc_network=resource)
+
+        return result
 
     def __absent(self, resource):
 
         if resource:
             self.oneview_client.fc_networks.delete(resource)
-            return True, FC_NETWORK_DELETED, {}
+            return {"changed": True, "msg": FC_NETWORK_DELETED}
         else:
-            return False, FC_NETWORK_ALREADY_ABSENT, {}
+            return {"changed": False, "msg": FC_NETWORK_ALREADY_ABSENT}
 
     def __get_by_name(self):
         result = self.oneview_client.fc_networks.get_by('name', self.data['name'])

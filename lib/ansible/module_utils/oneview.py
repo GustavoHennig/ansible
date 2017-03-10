@@ -38,6 +38,7 @@ logger = logging.getLogger(__name__)
 try:
     from hpOneView.oneview_client import OneViewClient
     from hpOneView.exceptions import HPOneViewException
+    from hpOneView.exceptions import HPOneViewTaskError
 
     HAS_HPE_ONEVIEW = True
 except ImportError:
@@ -47,36 +48,61 @@ except ImportError:
 class OneViewModuleBase(object):
     HPE_ONEVIEW_SDK_REQUIRED = 'HPE OneView Python SDK is required for this module.'
 
-    argument_spec = dict(
-        config=dict(required=False, type='str'),
-        state=dict(
-            required=True,
-            choices=['present', 'absent']
-        ),
-        data=dict(required=True, type='dict')
+    ONEVIEW_COMMON_ARGS = dict(
+            config=dict(required=False, type='str'),
+            state=dict(
+                required=True,
+                choices=['present', 'absent']
+            ),
+            data=dict(required=True, type='dict')
+        )
+
+    ONEVIEW_VALIDATE_ETAG_ARGS = dict(
+        validate_etag=dict(
+            required=False,
+            type='bool',
+            default=True)
     )
 
-    def __init__(self, run_callback, validate_etag_support=False):
+    def __build_argument_spec(self, additional_arg_spec, validate_etag_support):
+
+        merged_arg_spec = dict()
+        merged_arg_spec.update(self.ONEVIEW_COMMON_ARGS)
 
         if validate_etag_support:
-            self.argument_spec['validate_etag'] = dict(
-                required=False,
-                type='bool',
-                default=True)
+            merged_arg_spec.update(self.ONEVIEW_VALIDATE_ETAG_ARGS)
 
-        self.module = AnsibleModule(argument_spec=self.argument_spec, supports_check_mode=False)
+        if additional_arg_spec:
+            merged_arg_spec.update(additional_arg_spec)
+
+        return merged_arg_spec
+
+    def __init__(self, additional_arg_spec=None, validate_etag_support=False):
+
+        argument_spec = self.__build_argument_spec(additional_arg_spec, validate_etag_support)
+
+        self.module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=False)
+
+        self.__check_hpe_oneview()
+        self.__create_oneview_client()
+
+        self.state = self.module.params.get('state')
+        self.data = self.module.params.get('data')
+        self.validate_etag_support = validate_etag_support
+
+    def __check_hpe_oneview(self):
         if not HAS_HPE_ONEVIEW:
             self.module.fail_json(msg=self.HPE_ONEVIEW_SDK_REQUIRED)
 
+    def __create_oneview_client(self):
         if not self.module.params['config']:
             self.oneview_client = OneViewClient.from_environment_variables()
         else:
             self.oneview_client = OneViewClient.from_json_file(self.module.params['config'])
 
-        self.state = self.module.params.get('state')
-        self.data = self.module.params.get('data')
-        self.run_callback = run_callback
-        self.validate_etag_support = validate_etag_support
+    def execute_module(self):
+        # Abstract function, must be implemented by inheritor
+        raise HPOneViewException("execute_module not implemented")
 
     def run(self):
         try:
@@ -84,21 +110,22 @@ class OneViewModuleBase(object):
                 if not self.module.params.get('validate_etag'):
                     self.oneview_client.connection.disable_etag_validation()
 
-            changed, msg, ansible_facts = self.run_callback()
+            result = self.execute_module()
 
-            self.module.exit_json(changed=changed,
-                                  msg=msg,
-                                  ansible_facts=ansible_facts)
+            if "changed" not in result:
+                result['changed'] = False
+
+            self.module.exit_json(**result)
 
         except HPOneViewException as exception:
             self.module.fail_json(msg='; '.join(str(e) for e in exception.args))
 
 
-class Comparator():
+class ResourceComparator():
     MSG_DIFF_AT_KEY = 'Difference found at key \'{0}\'. '
 
     @staticmethod
-    def resource_compare(first_resource, second_resource):
+    def compare(first_resource, second_resource):
         """
         Recursively compares dictionary contents, ignoring type and order
         Args:
@@ -124,26 +151,27 @@ class Comparator():
                 # no key in second dict
                 if resource1[key] is not None:
                     # key inexistent is equivalent to exist and value None
-                    logger.debug(Comparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                    logger.debug(ResourceComparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                     return False
             # If both values are null / empty / False
             elif not resource1[key] and not resource2[key]:
                 continue
             elif isinstance(resource1[key], dict):
                 # recursive call
-                if not Comparator.resource_compare(resource1[key], resource2[key]):
+                if not ResourceComparator.compare(resource1[key], resource2[key]):
                     # if different, stops here
-                    logger.debug(Comparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                    logger.debug(ResourceComparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                     return False
             elif isinstance(resource1[key], list):
                 # change comparison function (list compare)
-                if not Comparator.resource_compare_list(resource1[key], resource2[key]):
+                if not ResourceComparator.compare_list(resource1[key], resource2[key]):
                     # if different, stops here
-                    logger.debug(Comparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                    logger.debug(ResourceComparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                     return False
-            elif Comparator._standardize_value(resource1[key]) != Comparator._standardize_value(resource2[key]):
+            elif ResourceComparator._standardize_value(resource1[key]) != ResourceComparator._standardize_value(
+                    resource2[key]):
                 # different value
-                logger.debug(Comparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                logger.debug(ResourceComparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
 
         # Check all keys in second dict to find missing
@@ -152,14 +180,14 @@ class Comparator():
                 # not exists in first dict
                 if resource2[key] is not None:
                     # key inexistent is equivalent to exist and value None
-                    logger.debug(Comparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
+                    logger.debug(ResourceComparator.MSG_DIFF_AT_KEY.format(key) + debug_resources)
                     return False
 
         # no differences found
         return True
 
     @staticmethod
-    def resource_compare_list(first_resource, second_resource):
+    def compare_list(first_resource, second_resource):
         """
         Recursively compares lists contents, ignoring type
         Args:
@@ -187,21 +215,21 @@ class Comparator():
             logger.debug("resources have different length. " + debug_resources)
             return False
 
-        resource1 = sorted(resource1, key=Comparator._str_sorted)
-        resource2 = sorted(resource2, key=Comparator._str_sorted)
+        resource1 = sorted(resource1, key=ResourceComparator._str_sorted)
+        resource2 = sorted(resource2, key=ResourceComparator._str_sorted)
 
         for i, val in enumerate(resource1):
             if isinstance(val, dict):
                 # change comparison function
-                if not Comparator.resource_compare(val, resource2[i]):
+                if not ResourceComparator.compare(val, resource2[i]):
                     logger.debug("resources are different. " + debug_resources)
                     return False
             elif isinstance(val, list):
                 # recursive call
-                if not Comparator.resource_compare_list(val, resource2[i]):
+                if not ResourceComparator.compare_list(val, resource2[i]):
                     logger.debug("lists are different. " + debug_resources)
                     return False
-            elif Comparator._standardize_value(val) != Comparator._standardize_value(resource2[i]):
+            elif ResourceComparator._standardize_value(val) != ResourceComparator._standardize_value(resource2[i]):
                 # value is different
                 logger.debug("values are different. " + debug_resources)
                 return False
@@ -235,7 +263,7 @@ class Comparator():
         return str(value)
 
 
-class Merger():
+class ResourceMerger():
     @staticmethod
     def merge_list_by_key(original_list, updated_list, key, ignore_when_null=[]):
         """
