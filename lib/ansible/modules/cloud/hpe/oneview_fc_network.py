@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# Copyright (2016) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2017) Hewlett Packard Enterprise Development LP
 #
 # This file is part of Ansible
 #
@@ -28,7 +28,7 @@ module: oneview_fc_network
 short_description: Manage OneView Fibre Channel Network resources.
 description:
     - Provides an interface to manage Fibre Channel Network resources. Can create, update, and delete.
-version_added: "1.0"
+version_added: "2.3"
 requirements:
     - "python >= 2.7.9"
     - "hpOneView >= 3.1.0"
@@ -82,68 +82,36 @@ fc_network:
 '''
 
 from ansible.module_utils.basic import *
-from ansible.module_utils.oneview import OneViewModuleBase, ResourceComparator
-
-FC_NETWORK_CREATED = 'FC Network created successfully.'
-FC_NETWORK_UPDATED = 'FC Network updated successfully.'
-FC_NETWORK_DELETED = 'FC Network deleted successfully.'
-FC_NETWORK_ALREADY_EXIST = 'FC Network already exists.'
-FC_NETWORK_ALREADY_ABSENT = 'Nothing to do.'
+from ansible.module_utils.oneview import OneViewModuleBase
 
 
 class FcNetworkModule(OneViewModuleBase):
+    MSG_CREATED = 'FC Network created successfully.'
+    MSG_UPDATED = 'FC Network updated successfully.'
+    MSG_DELETED = 'FC Network deleted successfully.'
+    MSG_ALREADY_EXIST = 'FC Network already exists.'
+    MSG_ALREADY_ABSENT = 'FC Network is already absent.'
+    RESOURCE_FACT_NAME = 'fc_network'
+
     def __init__(self):
         
-        add_arg_spec = dict(data=dict(required=True, type='dict'))
+        add_arg_spec = dict(data=dict(required=True, type='dict'),
+                            state=dict(
+                                required=True,
+                                choices=['present', 'absent']))
 
         super(FcNetworkModule, self).__init__(additional_arg_spec=add_arg_spec,
             validate_etag_support=True)
 
+        self.resource_client = self.oneview_client.fc_networks
+
     def execute_module(self):
-        resource = self.__get_by_name()
+        resource = self.get_by_name(self.data['name'])
 
         if self.state == 'present':
-            return self.__present(resource)
+            return self.resource_present(resource)
         elif self.state == 'absent':
-            return self.__absent(resource)
-
-    def __present(self, resource):
-
-        result = {}
-        if "newName" in self.data:
-            self.data["name"] = self.data.pop("newName")
-
-        if not resource:
-            resource = self.oneview_client.fc_networks.create(self.data)
-            result['msg'] = FC_NETWORK_CREATED
-            result['changed'] = True
-
-        else:
-            merged_data = resource.copy()
-            merged_data.update(self.data)
-
-            if ResourceComparator.compare(resource, merged_data):
-                result['msg'] = FC_NETWORK_ALREADY_EXIST
-            else:
-                resource = self.oneview_client.fc_networks.update(merged_data)
-                result['changed'] = True
-                result['msg'] = FC_NETWORK_UPDATED
-
-        result["ansible_facts"] = dict(fc_network=resource)
-
-        return result
-
-    def __absent(self, resource):
-
-        if resource:
-            self.oneview_client.fc_networks.delete(resource)
-            return {"changed": True, "msg": FC_NETWORK_DELETED}
-        else:
-            return {"changed": False, "msg": FC_NETWORK_ALREADY_ABSENT}
-
-    def __get_by_name(self):
-        result = self.oneview_client.fc_networks.get_by('name', self.data['name'])
-        return result[0] if result else None
+            return self.resource_absent(resource)
 
 
 def main():

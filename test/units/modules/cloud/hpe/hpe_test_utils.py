@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# Copyright (2016) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2017) Hewlett Packard Enterprise Development LP
 #
 # This file is part of Ansible
 #
@@ -19,7 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import importlib
-from mock import Mock, patch, mock
+from mock import Mock, patch
 from hpOneView.oneview_client import OneViewClient
 
 
@@ -47,7 +47,6 @@ class OneViewBaseTestCase(object):
         self.mock_ov_client = self.mock_ov_client_from_json_file.return_value
 
         # Define Ansible Module Mock
-        # patcher_ansible = patch(self._testing_module + '.AnsibleModule')
         patcher_ansible = patch('ansible.module_utils.oneview.AnsibleModule')
         test_case.addCleanup(patcher_ansible.stop)
         mock_ansible_module = patcher_ansible.start()
@@ -60,7 +59,7 @@ class OneViewBaseTestCase(object):
         module = importlib.import_module(self.testing_class.__module__)
         main_func = getattr(module, 'main')
 
-        with mock.patch.object(self.testing_class, "run") as mock_run:
+        with patch.object(self.testing_class, "run") as mock_run:
             main_func()
             mock_run.assert_called_once()
 
