@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# Copyright (2016) Hewlett Packard Enterprise Development LP
+# Copyright (2016-2017) Hewlett Packard Enterprise Development LP
 #
 # This file is part of Ansible
 #
@@ -24,13 +24,8 @@ from ansible.module_utils.oneview import (OneViewModuleBase,
                                           ResourceComparator,
                                           ResourceMerger,
                                           OneViewClient,
-                                          HPOneViewException)
-
-PARAMS_FOR_PRESENT = dict(
-    config='config.json',
-    state='present',
-    data={'name': 'resource name'}
-)
+                                           HPOneViewException,
+                                           HPOneViewValueError)
 
 MSG_GENERIC_ERROR = 'Generic error message'
 MSG_GENERIC = "Generic message"
@@ -45,6 +40,22 @@ class OneViewModuleBaseSpec(unittest.TestCase):
     mock_ansible_module = None
     mock_ansible_module_init = None
     mock_ov_client = None
+
+    MODULE_EXECUTE_RETURN_VALUE = dict(
+        changed=True,
+        msg=MSG_GENERIC,
+        ansible_facts={'ansible_facts': None}
+    )
+
+    PARAMS_FOR_PRESENT = dict(
+        config='config.json',
+        state='present',
+        data={'name': 'resource name'}
+    )
+
+    RESOURCE_COMMON = {'uri': '/rest/resource/id',
+                       'name': 'Resource Name'
+                       }
 
     def setUp(self):
         # Define OneView Client Mock (FILE)
@@ -69,10 +80,13 @@ class OneViewModuleBaseSpec(unittest.TestCase):
 
     def test_should_call_exit_json_properly(self):
 
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        mock_run = mock.Mock()
+        mock_run.return_value = self.MODULE_EXECUTE_RETURN_VALUE.copy()
 
         base_mod = OneViewModuleBase()
-        base_mod.execute_module = self.execute_module
+        base_mod.execute_module = mock_run
         base_mod.run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
@@ -81,9 +95,22 @@ class OneViewModuleBaseSpec(unittest.TestCase):
             ansible_facts={'ansible_facts': None}
         )
 
-    def execute_module(self):
-        return dict(
-            changed=True,
+    def test_should_call_exit_json_adding_changed(self):
+
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        mock_run = mock.Mock()
+        mock_run.return_value = dict(
+            msg=MSG_GENERIC,
+            ansible_facts={'ansible_facts': None}
+        )
+
+        base_mod = OneViewModuleBase()
+        base_mod.execute_module = mock_run
+        base_mod.run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
             msg=MSG_GENERIC,
             ansible_facts={'ansible_facts': None}
         )
@@ -116,42 +143,36 @@ class OneViewModuleBaseSpec(unittest.TestCase):
             msg='HPE OneView Python SDK is required for this module.')
 
     def test_should_validate_etag_when_set_as_true(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
         self.mock_ansible_module.params['validate_etag'] = True
 
         OneViewModuleBase(validate_etag_support=True).run()
         expected_arg_spec = {'config': {'required': False, 'type': 'str'},
-                             'state': {'required': True, 'choices': ['present', 'absent']},
-                             'validate_etag': {'default': True, 'required': False, 'type': 'bool'},
-                             'data': {'required': True, 'type': 'dict'}}
+                             'validate_etag': {'default': True, 'required': False, 'type': 'bool'}}
         self.mock_ansible_module_init.assert_called_once_with(argument_spec=expected_arg_spec,
                                                               supports_check_mode=False)
         self.mock_ov_client.connection.enable_etag_validation.not_been_called()
         self.mock_ov_client.connection.disable_etag_validation.not_been_called()
 
     def test_should_not_validate_etag_when_set_as_false(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
         self.mock_ansible_module.params['validate_etag'] = False
 
         OneViewModuleBase(validate_etag_support=True).run()
         expected_arg_spec = {'config': {'required': False, 'type': 'str'},
-                             'state': {'required': True, 'choices': ['present', 'absent']},
-                             'validate_etag': {'default': True, 'required': False, 'type': 'bool'},
-                             'data': {'required': True, 'type': 'dict'}}
+                             'validate_etag': {'default': True, 'required': False, 'type': 'bool'}}
         self.mock_ansible_module_init.assert_called_once_with(argument_spec=expected_arg_spec,
                                                               supports_check_mode=False)
         self.mock_ov_client.connection.enable_etag_validation.not_been_called()
         self.mock_ov_client.connection.disable_etag_validation.assert_called_once()
 
     def test_should_not_validate_etag_when_not_supported(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
         self.mock_ansible_module.params['validate_etag'] = False
 
         OneViewModuleBase(validate_etag_support=False).run()
 
-        expected_arg_spec = {'config': {'required': False, 'type': 'str'},
-                             'state': {'required': True, 'choices': ['present', 'absent']},
-                             'data': {'required': True, 'type': 'dict'}}
+        expected_arg_spec = {'config': {'required': False, 'type': 'str'}}
         self.mock_ansible_module_init.assert_called_once_with(argument_spec=expected_arg_spec,
                                                               supports_check_mode=False)
 
@@ -159,19 +180,18 @@ class OneViewModuleBaseSpec(unittest.TestCase):
         self.mock_ov_client.connection.disable_etag_validation.not_been_called()
 
     def test_additional_argument_spec_construction(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
 
         OneViewModuleBase(validate_etag_support=False, additional_arg_spec={'options': 'list'})
 
         expected_arg_spec = {'config': {'required': False, 'type': 'str'},
-                             'state': {'required': True, 'choices': ['present', 'absent']},
-                             'data': {'required': True, 'type': 'dict'}, 'options': 'list'}
+                             'options': 'list'}
 
         self.mock_ansible_module_init.assert_called_once_with(argument_spec=expected_arg_spec,
                                                               supports_check_mode=False)
 
     def test_should_call_fail_json_when_oneview_exception(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
 
         mock_run = mock.Mock()
         mock_run.side_effect = HPOneViewException(MSG_GENERIC_ERROR)
@@ -183,7 +203,7 @@ class OneViewModuleBaseSpec(unittest.TestCase):
         self.mock_ansible_module.fail_json.assert_called_once_with(msg=MSG_GENERIC_ERROR)
 
     def test_should_not_handle_value_error_exception(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
 
         mock_run = mock.Mock()
         mock_run.side_effect = ValueError(MSG_GENERIC_ERROR)
@@ -200,7 +220,7 @@ class OneViewModuleBaseSpec(unittest.TestCase):
             self.fail('Expected ValueError was not raised')
 
     def test_should_not_handle_exception(self):
-        self.mock_ansible_module.params = PARAMS_FOR_PRESENT
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
 
         mock_run = mock.Mock()
         mock_run.side_effect = Exception(MSG_GENERIC_ERROR)
@@ -214,10 +234,132 @@ class OneViewModuleBaseSpec(unittest.TestCase):
         else:
             self.fail('Expected Exception was not raised')
 
+    def test_resource_present_should_create(self):
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        ov_base = OneViewModuleBase()
+        ov_base.resource_client = mock.Mock()
+        ov_base.resource_client.create.return_value = self.RESOURCE_COMMON
+        ov_base.data = {'name': 'Resource Name'}
+        ov_base.RESOURCE_FACT_NAME = 'resource'
+
+        facts = ov_base.resource_present(None)
+
+        expected = self.RESOURCE_COMMON.copy()
+
+        ov_base.resource_client.create.assert_called_once_with({'name': 'Resource Name'})
+
+        self.assertEqual(facts,
+                         dict(
+                             changed=True,
+                             msg=OneViewModuleBase.MSG_CREATED,
+                             ansible_facts=dict(resource=expected))
+                         )
+
+    def test_resource_present_should_fail_with_undefined_fact_name(self):
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+        ov_base = OneViewModuleBase()
+
+        self.assertRaises(HPOneViewValueError, ov_base.resource_present, None)
+
+    def test_resource_present_should_not_update_when_data_is_equals(self):
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        ov_base = OneViewModuleBase()
+        ov_base.resource_client = mock.Mock()
+        ov_base.data = self.RESOURCE_COMMON.copy()
+        ov_base.RESOURCE_FACT_NAME = 'resource'
+
+        facts = ov_base.resource_present(self.RESOURCE_COMMON.copy())
+
+        self.assertEqual(facts,
+                         dict(
+                             changed=False,
+                             msg=OneViewModuleBase.MSG_ALREADY_EXIST,
+                             ansible_facts=dict(resource=self.RESOURCE_COMMON.copy()))
+                         )
+
+    def test_resource_present_should_update_when_data_has_modified_attributes(self):
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        ov_base = OneViewModuleBase()
+        ov_base.resource_client = mock.Mock()
+        ov_base.resource_client.update.return_value = {'return': 'value'}
+        ov_base.data = {'newName': 'Resource Name New'}
+        ov_base.RESOURCE_FACT_NAME = 'resource'
+
+        facts = ov_base.resource_present(self.RESOURCE_COMMON)
+
+        expected = self.RESOURCE_COMMON.copy()
+        expected['name'] = 'Resource Name New'
+
+        ov_base.resource_client.update.assert_called_once_with(expected)
+
+        self.assertEqual(facts,
+                         dict(
+                             changed=True,
+                             msg=OneViewModuleBase.MSG_UPDATED,
+                             ansible_facts=dict(resource={'return': 'value'}))
+                         )
+
+    def test_resource_absent_should_remove(self):
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        ov_base = OneViewModuleBase()
+        ov_base.resource_client = mock.Mock()
+
+        facts = ov_base.resource_absent(self.RESOURCE_COMMON.copy())
+        ov_base.resource_client.delete.assert_called_once_with(self.RESOURCE_COMMON.copy())
+
+        self.assertEqual(facts,
+                         dict(
+                             changed=True,
+                             msg=OneViewModuleBase.MSG_DELETED)
+                         )
+
+    def test_resource_absent_should_do_nothing_when_not_exist(self):
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        ov_base = OneViewModuleBase()
+        ov_base.resource_client = mock.Mock()
+
+        facts = ov_base.resource_absent(None)
+        ov_base.resource_client.delete.assert_not_called()
+
+        self.assertEqual(facts,
+                         dict(
+                             changed=False,
+                             msg=OneViewModuleBase.MSG_ALREADY_ABSENT)
+                         )
+
+    def test_get_by_name_with_value(self):
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        ov_base = OneViewModuleBase()
+        ov_base.resource_client = mock.Mock()
+        ov_base.resource_client.get_by.return_value = [{'resource': 1}]
+
+        res = ov_base.get_by_name('name')
+
+        ov_base.resource_client.get_by.assert_called_once_with('name', 'name')
+
+        self.assertEqual(res, {'resource': 1})
+
+    def test_get_by_name_without_value(self):
+        self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
+
+        ov_base = OneViewModuleBase()
+        ov_base.resource_client = mock.Mock()
+        ov_base.resource_client.get_by.return_value = []
+
+        res = ov_base.get_by_name('name')
+
+        ov_base.resource_client.get_by.assert_called_once_with('name', 'name')
+
+        self.assertIsNone(res)
 
 
-
-class ResourceCompareTest(unittest.TestCase):
+class ResourceComparatorTest(unittest.TestCase):
     DICT_ORIGINAL = {u'status': u'OK', u'category': u'fcoe-networks',
                      u'description': None, u'created': u'2016-06-13T20:39:15.991Z',
                      u'uri': u'/rest/fcoe-networks/36c56106-3b14-4f0d-8df9-627700b8e01b',
@@ -863,7 +1005,7 @@ class ResourceCompareTest(unittest.TestCase):
         self.assertFalse(ResourceComparator.compare(dict1, dict2))
 
 
-class MergersTest(unittest.TestCase):
+class ResourceMergerTest(unittest.TestCase):
     def test_merge_list_by_key_when_original_list_is_empty(self):
         original_list = []
         list_with_changes = [dict(id=1, value="123")]
