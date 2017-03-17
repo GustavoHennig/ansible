@@ -375,6 +375,24 @@ class ResourceMerger():
         return [val for (_, val) in merged_items.items()]
 
 
+def transform_list_to_dict(list):
+    """
+        Transforms a list into a dictionary, putting values as keys
+    Args:
+        id:
+    Returns:
+        dict: dictionary built
+    """
+
+    ret = {}
+
+    for value in list:
+        if isinstance(value, dict):
+            ret.update(value)
+        else:
+            ret[str(value)] = True
+
+    return ret
 class SPKeys(object):
     ID = 'id'
     NAME = 'name'

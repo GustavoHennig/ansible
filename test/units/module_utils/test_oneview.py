@@ -2476,6 +2476,18 @@ class ServerProfileMergerTest(unittest.TestCase):
 
         self.assertFalse(merged_data[SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS][self.INDEX_MEZZ][SPKeys.LOGICAL_DRIVES])
 
+class CommonFunctionsTest(unittest.TestCase):
+    def test_transform_list_to_dict(self):
+        list = ['one', 'two', {'tree': 3}, 'four', 5]
+
+        dict_transformed = transform_list_to_dict(list=list)
+
+        self.assertEqual(dict_transformed,
+                         {'5': True,
+                          'four': True,
+                          'one': True,
+                          'tree': 3,
+                          'two': True})
 
 if __name__ == '__main__':
     unittest.main()
