@@ -137,11 +137,9 @@ server_hardware:
     type: complex
 '''
 
-from ansible.module_utils.basic import *
+from ansible.module_utils.basic import AnsibleModule
 
-from ansible.module_utils.oneview import OneViewModuleBase
-from hpOneView.exceptions import HPOneViewResourceNotFound
-from hpOneView.exceptions import HPOneViewValueError
+from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewResourceNotFound, HPOneViewValueError
 
 
 class ServerHardwareModule(OneViewModuleBase):

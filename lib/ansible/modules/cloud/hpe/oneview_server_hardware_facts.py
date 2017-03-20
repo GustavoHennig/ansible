@@ -185,9 +185,9 @@ server_hardware_firmwares:
     returned: When requested, but can be null.
     type: complex
 '''
-from ansible.module_utils.basic import *
 
-from ansible.module_utils.oneview import OneViewModuleBase, transform_list_to_dict
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.oneview import OneViewModuleBase
 
 
 class ServerHardwareFactsModule(OneViewModuleBase):
@@ -201,22 +201,19 @@ class ServerHardwareFactsModule(OneViewModuleBase):
 
     def execute_module(self):
 
-        ansible_facts, options = {}, None
-
-        if self.module.params.get('options'):
-            options = transform_list_to_dict(self.module.params.get('options'))
+        ansible_facts = {}
 
         if self.module.params.get('name'):
             server_hardwares = self.oneview_client.server_hardware.get_by("name", self.module.params['name'])
 
-            if options and server_hardwares:
-                ansible_facts = self.gather_option_facts(options, server_hardwares[0])
+            if self.options and server_hardwares:
+                ansible_facts = self.gather_option_facts(self.options, server_hardwares[0])
 
         else:
             server_hardwares = self.oneview_client.server_hardware.get_all(**self.params)
 
-            if options and options.get('firmwares'):
-                ansible_facts['server_hardware_firmwares'] = self.get_all_firmwares(options)
+        if self.options and self.options.get('firmwares'):
+            ansible_facts['server_hardware_firmwares'] = self.get_all_firmwares(self.options)
 
         ansible_facts["server_hardwares"] = server_hardwares
 

@@ -95,7 +95,13 @@ class OneViewModuleBase(object):
 
         self.state = self.module.params.get('state')
         self.data = self.module.params.get('data')
+
+        # Preload params for get_all - used by facts
         self.params = self.module.params.get('params') or {}
+
+        # Preload options as dict - used by facts
+        self.options = self.transform_list_to_dict(self.module.params.get('options'))
+
         self.validate_etag_support = validate_etag_support
 
     def __check_hpe_oneview(self):
@@ -170,6 +176,30 @@ class OneViewModuleBase(object):
             changed=changed,
             ansible_facts={self.RESOURCE_FACT_NAME: resource}
         )
+
+    @staticmethod
+    def transform_list_to_dict(list_):
+        """
+            Transforms a list into a dictionary, putting values as keys
+        Args:
+            list_: List of values
+
+        Returns:
+            dict: dictionary built
+        """
+
+        ret = {}
+
+        if not list_:
+            return ret
+
+        for value in list_:
+            if isinstance(value, dict):
+                ret.update(value)
+            else:
+                ret[str(value)] = True
+
+        return ret
 
     @staticmethod
     def get_logger(mod_name):
@@ -375,24 +405,6 @@ class ResourceMerger():
         return [val for (_, val) in merged_items.items()]
 
 
-def transform_list_to_dict(list):
-    """
-        Transforms a list into a dictionary, putting values as keys
-    Args:
-        id:
-    Returns:
-        dict: dictionary built
-    """
-
-    ret = {}
-
-    for value in list:
-        if isinstance(value, dict):
-            ret.update(value)
-        else:
-            ret[str(value)] = True
-
-    return ret
 class SPKeys(object):
     ID = 'id'
     NAME = 'name'

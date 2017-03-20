@@ -1494,7 +1494,6 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         ServerProfileModule().run()
                         
-        self.maxDiff = None
         mock_deep_merge.assert_called_once_with(server_profile, PARAMS_FOR_PRESENT['data'])
 
     @mock.patch.object(ResourceComparator, 'compare')
