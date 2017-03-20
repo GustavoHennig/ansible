@@ -25,13 +25,12 @@ from ansible.module_utils.oneview import (OneViewModuleBase,
                                           ResourceComparator,
                                           ResourceMerger,
                                           OneViewClient,
-                                           HPOneViewException,
-                                           HPOneViewValueError,
-                                           ServerProfileReplaceNamesByUris,
-                                           SPKeys,
-                                           ServerProfileMerger,
-                                           HPOneViewResourceNotFound
-                                           )
+                                          HPOneViewException,
+                                          HPOneViewValueError,
+                                          ServerProfileReplaceNamesByUris,
+                                          SPKeys,
+                                          ServerProfileMerger,
+                                          HPOneViewResourceNotFound)
 
 MSG_GENERIC_ERROR = 'Generic error message'
 MSG_GENERIC = "Generic message"
@@ -363,6 +362,24 @@ class OneViewModuleBaseSpec(unittest.TestCase):
         ov_base.resource_client.get_by.assert_called_once_with('name', 'name')
 
         self.assertIsNone(res)
+
+    def test_transform_list_to_dict(self):
+        list_ = ['one', 'two', {'tree': 3}, 'four', 5]
+
+        dict_transformed = OneViewModuleBase.transform_list_to_dict(list_=list_)
+
+        self.assertEqual(dict_transformed,
+                         {'5': True,
+                          'four': True,
+                          'one': True,
+                          'tree': 3,
+                          'two': True})
+
+    def test_transform_list_to_dict_with_none(self):
+
+        dict_transformed = OneViewModuleBase.transform_list_to_dict(None)
+
+        self.assertEqual(dict_transformed, {})
 
 
 class ResourceComparatorTest(unittest.TestCase):
@@ -2476,18 +2493,6 @@ class ServerProfileMergerTest(unittest.TestCase):
 
         self.assertFalse(merged_data[SPKeys.LOCAL_STORAGE][SPKeys.CONTROLLERS][self.INDEX_MEZZ][SPKeys.LOGICAL_DRIVES])
 
-class CommonFunctionsTest(unittest.TestCase):
-    def test_transform_list_to_dict(self):
-        list = ['one', 'two', {'tree': 3}, 'four', 5]
-
-        dict_transformed = transform_list_to_dict(list=list)
-
-        self.assertEqual(dict_transformed,
-                         {'5': True,
-                          'four': True,
-                          'one': True,
-                          'tree': 3,
-                          'two': True})
 
 if __name__ == '__main__':
     unittest.main()

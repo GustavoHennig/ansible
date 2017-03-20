@@ -49,3 +49,16 @@ options:
         default: true
         choices: ['true', 'false']
 '''
+
+    FACTSPARAMS = '''
+options:    
+    params:
+        description:
+        - List of params to delimit, filter and sort the list of resources.
+        - "params allowed:
+            C(start): The first item to return, using 0-based indexing.
+            C(count): The number of resources to return.
+            C(filter): A general filter/query string to narrow the list of items returned.
+            C(sort): The sort order of the returned data set."
+        required: false
+'''
