@@ -33,15 +33,6 @@ author:
     - "Camila Balestrin (@balestrinc)"
     - "Mariana Kreisig (@marikrg)"
 options:
-    params:
-      description:
-        - List of params to delimit, filter and sort the list of resources.
-        - "params allowed:
-          C(start): The first item to return, using 0-based indexing.
-          C(count): The number of resources to return.
-          C(filter): A general filter/query string to narrow the list of items returned.
-          C(sort): The sort order of the returned data set."
-      required: false
     name:
       description:
         - Ethernet Network name.
@@ -53,6 +44,7 @@ options:
       required: false
 extends_documentation_fragment:
     - oneview
+    - oneview.factsparams
 '''
 
 EXAMPLES = '''
@@ -110,7 +102,7 @@ enet_associated_uplink_groups:
     type: complex
 '''
 
-from ansible.module_utils.oneview import OneViewModuleBase, transform_list_to_dict
+from ansible.module_utils.oneview import OneViewModuleBase
 
 
 class EthernetNetworkFactsModule(OneViewModuleBase):
@@ -131,7 +123,7 @@ class EthernetNetworkFactsModule(OneViewModuleBase):
             ethernet_networks = self.resource_client.get_by('name', self.module.params['name'])
 
             if self.module.params.get('options') and ethernet_networks:
-                ansible_facts = self.__gather_optional_facts(self.module.params['options'], ethernet_networks[0])
+                ansible_facts = self.__gather_optional_facts(ethernet_networks[0])
         else:
             ethernet_networks = self.resource_client.get_all(**self.params)
 
@@ -139,14 +131,13 @@ class EthernetNetworkFactsModule(OneViewModuleBase):
 
         return dict(changed=False, ansible_facts=ansible_facts)
 
-    def __gather_optional_facts(self, options, ethernet_network):
-        options = transform_list_to_dict(options)
+    def __gather_optional_facts(self, ethernet_network):
 
         ansible_facts = {}
 
-        if options.get('associatedProfiles'):
+        if self.options.get('associatedProfiles'):
             ansible_facts['enet_associated_profiles'] = self.__get_associated_profiles(ethernet_network)
-        if options.get('associatedUplinkGroups'):
+        if self.options.get('associatedUplinkGroups'):
             ansible_facts['enet_associated_uplink_groups'] = self.__get_associated_uplink_groups(ethernet_network)
 
         return ansible_facts

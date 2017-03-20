@@ -21,7 +21,7 @@
 import unittest
 
 from ansible.modules.cloud.hpe.oneview_ethernet_network_facts import EthernetNetworkFactsModule
-from hpe_test_utils import OneViewBaseTestCase, FactsParamsTestCase
+from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'
 

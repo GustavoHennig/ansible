@@ -31,21 +31,13 @@ requirements:
     - "hpOneView >= 2.0.1"
 author: "Camila Balestrin (@balestrinc)"
 options:
-    params:
-      description:
-        - List of params to delimit, filter and sort the list of resources.
-        - "params allowed:
-          C(start): The first item to return, using 0-based indexing.
-          C(count): The number of resources to return.
-          C(filter): A general filter/query string to narrow the list of items returned.
-          C(sort): The sort order of the returned data set."
-      required: false
     name:
       description:
         - Interconnect Type name.
       required: false
 extends_documentation_fragment:
     - oneview
+    - oneview.factsparams
 '''
 
 EXAMPLES = '''
