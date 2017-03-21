@@ -100,13 +100,13 @@ server_profile_template:
 import time
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import (OneViewModuleBase,
-                                           ServerProfileReplaceNamesByUris,
-                                           HPOneViewValueError,
-                                           ServerProfileMerger,
-                                           ResourceComparator,
-                                           HPOneViewTaskError,
-                                           SPKeys,
-                                           HPOneViewException)
+                                          ServerProfileReplaceNamesByUris,
+                                          HPOneViewValueError,
+                                          ServerProfileMerger,
+                                          ResourceComparator,
+                                          HPOneViewTaskError,
+                                          SPKeys,
+                                          HPOneViewException)
 from copy import deepcopy
 
 SRV_PROFILE_TEMPLATE_CREATED = 'Server Profile Template created successfully.'
@@ -142,8 +142,8 @@ class ServerProfileTemplateModule(OneViewModuleBase):
 
         if self.state == 'present':
             result = self.__present(self.data, template)
-            else:
-                result = self.__absent(template)
+        else:
+            result = self.__absent(template)
 
         return result
 
