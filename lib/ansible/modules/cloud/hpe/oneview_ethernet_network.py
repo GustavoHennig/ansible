@@ -182,7 +182,7 @@ class EthernetNetworkModule(OneViewModuleBase):
     def __present(self, resource):
 
         bandwidth = self.data.pop('bandwidth', None)
-        result = self.resource_present(resource)
+        result = self.resource_present(resource, self.RESOURCE_FACT_NAME)
 
         if bandwidth:
             if self.__update_connection_template(result['ansible_facts']['ethernet_network'], bandwidth)[0]:
