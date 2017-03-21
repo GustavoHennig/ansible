@@ -116,7 +116,7 @@ class NetworkSetModule(OneViewModuleBase):
 
         if self.state == 'present':
             self.__replace_network_name_by_uri(self.data)
-            return self.resource_present(resource)
+            return self.resource_present(resource, self.RESOURCE_FACT_NAME)
         elif self.state == 'absent':
             return self.resource_absent(resource)
 
