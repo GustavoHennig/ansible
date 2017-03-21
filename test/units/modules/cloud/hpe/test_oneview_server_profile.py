@@ -23,15 +23,24 @@ import unittest
 import mock
 
 from copy import deepcopy
-from ansible.module_utils.oneview import (HPOneViewException, HPOneViewTaskError, OneViewModuleBase, SPKeys,
-                                           ServerProfileMerger, ServerProfileReplaceNamesByUris, ResourceComparator)
+from ansible.module_utils.oneview import (HPOneViewException,
+                                          HPOneViewTaskError,
+                                          OneViewModuleBase,
+                                          SPKeys,
+                                          ServerProfileMerger,
+                                          ServerProfileReplaceNamesByUris,
+                                          ResourceComparator)
 
-
-from ansible.modules.cloud.hpe.oneview_server_profile import (ServerProfileModule, MAKE_COMPLIANT_NOT_SUPPORTED, SERVER_PROFILE_CREATED,
-                                    REMEDIATED_COMPLIANCE,
-                                    ALREADY_COMPLIANT, SERVER_PROFILE_DELETED, SERVER_PROFILE_UPDATED,
-                                    SERVER_ALREADY_UPDATED,
-                                    ERROR_ALLOCATE_SERVER_HARDWARE, SERVER_PROFILE_ALREADY_ABSENT)
+from ansible.modules.cloud.hpe.oneview_server_profile import (ServerProfileModule,
+      					                                      MAKE_COMPLIANT_NOT_SUPPORTED,
+						                                      SERVER_PROFILE_CREATED,
+						                                      REMEDIATED_COMPLIANCE,
+						                                      ALREADY_COMPLIANT,
+						                                      SERVER_PROFILE_DELETED,
+						                                      SERVER_PROFILE_UPDATED,
+						                                      SERVER_ALREADY_UPDATED,
+						                                      ERROR_ALLOCATE_SERVER_HARDWARE,
+						                                      SERVER_PROFILE_ALREADY_ABSENT)
 
 from hpe_test_utils import OneViewBaseTestCase
 

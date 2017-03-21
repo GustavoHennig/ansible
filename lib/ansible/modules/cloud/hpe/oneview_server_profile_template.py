@@ -97,17 +97,11 @@ server_profile_template:
     type: complex
 '''
 
-import time
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import (OneViewModuleBase,
-                                           ServerProfileReplaceNamesByUris,
-                                           HPOneViewValueError,
-                                           ServerProfileMerger,
-                                           ResourceComparator,
-                                           HPOneViewTaskError,
-                                           SPKeys,
-                                           HPOneViewException)
-from copy import deepcopy
+                                          ServerProfileReplaceNamesByUris,
+                                          ServerProfileMerger,
+                                          ResourceComparator)
 
 SRV_PROFILE_TEMPLATE_CREATED = 'Server Profile Template created successfully.'
 SRV_PROFILE_TEMPLATE_UPDATED = 'Server Profile Template updated successfully.'
@@ -142,8 +136,8 @@ class ServerProfileTemplateModule(OneViewModuleBase):
 
         if self.state == 'present':
             result = self.__present(self.data, template)
-            else:
-                result = self.__absent(template)
+        else:
+            result = self.__absent(template)
 
         return result
 
