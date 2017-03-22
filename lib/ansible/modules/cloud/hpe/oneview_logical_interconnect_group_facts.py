@@ -77,6 +77,7 @@ logical_interconnect_groups:
     type: complex
 '''
 
+from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import OneViewModuleBase
 
 

@@ -184,11 +184,7 @@ class ServerHardwareModule(OneViewModuleBase):
                 'environmental_configuration_set',
             ]
         ),
-        data=dict(required=True, type='dict'),
-        validate_etag=dict(
-            required=False,
-            type='bool',
-            default=True)
+        data=dict(required=True, type='dict')
     )
 
     def __init__(self):

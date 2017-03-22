@@ -126,7 +126,7 @@ ethernet_network_connection_template:
     type: complex
 '''
 
-
+from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import OneViewModuleBase, ResourceComparator
 from hpOneView.exceptions import HPOneViewResourceNotFound
 

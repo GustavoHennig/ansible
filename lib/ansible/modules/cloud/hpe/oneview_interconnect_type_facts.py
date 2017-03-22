@@ -18,6 +18,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
+ANSIBLE_METADATA = {'status': ['stableinterface'],
+                    'supported_by': 'committer',
+                    'version': '1.0'}
 
 DOCUMENTATION = '''
 ---
@@ -72,6 +75,8 @@ interconnect_types:
     returned: Always, but can be null.
     type: complex
 '''
+
+from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import OneViewModuleBase
 
 
