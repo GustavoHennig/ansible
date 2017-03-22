@@ -82,6 +82,7 @@ firmware_drivers:
     type: complex
 '''
 
+from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import OneViewModuleBase
 
 

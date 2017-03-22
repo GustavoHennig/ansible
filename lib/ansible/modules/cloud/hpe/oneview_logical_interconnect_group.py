@@ -93,6 +93,7 @@ logical_interconnect_group:
     type: complex
 '''
 
+from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import OneViewModuleBase
 from hpOneView.exceptions import HPOneViewResourceNotFound
 
