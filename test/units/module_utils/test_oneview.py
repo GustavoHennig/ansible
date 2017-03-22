@@ -217,8 +217,6 @@ class OneViewModuleBaseSpec(unittest.TestCase):
             base_mod = OneViewModuleBase(validate_etag_support=True)
             base_mod.execute_module = mock_run
             base_mod.run()
-
-
         except ValueError as e:
             self.assertEqual(e.args[0], MSG_GENERIC_ERROR)
         else:
@@ -1096,7 +1094,7 @@ class ResourceMergerTest(unittest.TestCase):
         list_with_changes = [dict(id=1, value1=None, value2="345-changed")]
 
         merged_list = ResourceMerger.merge_list_by_key(original_list, list_with_changes, key="id",
-                                        ignore_when_null=['value1', 'value2'])
+                                                       ignore_when_null=['value1', 'value2'])
 
         expected_list = [dict(id=1, value1="123", value2="345-changed")]
 
@@ -1107,7 +1105,7 @@ class ResourceMergerTest(unittest.TestCase):
         list_with_changes = [dict(id=1, value3="678")]
 
         merged_list = ResourceMerger.merge_list_by_key(original_list, list_with_changes, key="id",
-                                        ignore_when_null=['value1'])
+                                                       ignore_when_null=['value1'])
 
         expected_list = [dict(id=1, value1="123", value2="345", value3="678")]
 
@@ -2186,6 +2184,7 @@ class ServerProfileMergerTest(unittest.TestCase):
                     osDeploymentSettings=deepcopy(self.OS_DEPLOYMENT_SETTINGS))
         first_attr = data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][0]
         second_attr = data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][1]
+
         data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][0] = second_attr
         data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES][1] = first_attr
         resource = deepcopy(self.profile_with_os_deployment)

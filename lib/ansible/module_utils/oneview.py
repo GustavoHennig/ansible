@@ -33,7 +33,6 @@ from copy import deepcopy
 from collections import OrderedDict
 
 standard_library.install_aliases()
-
 logger = logging.getLogger(__name__)
 
 try:
@@ -58,7 +57,7 @@ class OneViewModuleBase(object):
 
     ONEVIEW_COMMON_ARGS = dict(
         config=dict(required=False, type='str')
-        )
+    )
 
     ONEVIEW_VALIDATE_ETAG_ARGS = dict(
         validate_etag=dict(
@@ -511,8 +510,8 @@ class ServerProfileMerger(object):
         if self._should_merge(data, resource, key=SPKeys.CONNECTIONS):
             existing_connections = resource[SPKeys.CONNECTIONS]
             params_connections = data[SPKeys.CONNECTIONS]
-            merged_data[SPKeys.CONNECTIONS] = ResourceMerger.merge_list_by_key(existing_connections, 
-																			   params_connections,
+            merged_data[SPKeys.CONNECTIONS] = ResourceMerger.merge_list_by_key(existing_connections,
+                                                                               params_connections,
                                                                                key=SPKeys.ID)
 
             # merge Boot from Connections
@@ -614,9 +613,9 @@ class ServerProfileMerger(object):
             existing_items = resource[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS]
             provided_items = merged_data[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS]
             merged_jbods = ResourceMerger.merge_list_by_key(existing_items,
-                                             provided_items,
-                                             key=SPKeys.ID,
-                                             ignore_when_null=[SPKeys.SAS_LOGICAL_JBOD_URI])
+                                                            provided_items,
+                                                            key=SPKeys.ID,
+                                                            ignore_when_null=[SPKeys.SAS_LOGICAL_JBOD_URI])
             merged_data[SPKeys.LOCAL_STORAGE][SPKeys.SAS_LOGICAL_JBODS] = merged_jbods
         return merged_data
 
@@ -644,8 +643,8 @@ class ServerProfileMerger(object):
 
                     if key_merge:
                         merged_drives = ResourceMerger.merge_list_by_key(existing_controller[SPKeys.LOGICAL_DRIVES],
-                                                          current_controller[SPKeys.LOGICAL_DRIVES],
-                                                          key=key_merge)
+                                                                         current_controller[SPKeys.LOGICAL_DRIVES],
+                                                                         key=key_merge)
                         current_controller[SPKeys.LOGICAL_DRIVES] = merged_drives
         return merged_data
 
