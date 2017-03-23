@@ -68,19 +68,6 @@ class OneViewModuleBase(object):
 
     resource_client = None
 
-    def __build_argument_spec(self, additional_arg_spec, validate_etag_support):
-
-        merged_arg_spec = dict()
-        merged_arg_spec.update(self.ONEVIEW_COMMON_ARGS)
-
-        if validate_etag_support:
-            merged_arg_spec.update(self.ONEVIEW_VALIDATE_ETAG_ARGS)
-
-        if additional_arg_spec:
-            merged_arg_spec.update(additional_arg_spec)
-
-        return merged_arg_spec
-
     def __init__(self, additional_arg_spec=None, validate_etag_support=False):
         """
         OneViewModuleBase constructor.
@@ -94,7 +81,7 @@ class OneViewModuleBase(object):
 
         self.module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=False)
 
-        self.__check_hpe_oneview()
+        self.__check_hpe_oneview_sdk()
         self.__create_oneview_client()
 
         self.state = self.module.params.get('state')
@@ -108,7 +95,20 @@ class OneViewModuleBase(object):
 
         self.validate_etag_support = validate_etag_support
 
-    def __check_hpe_oneview(self):
+    def __build_argument_spec(self, additional_arg_spec, validate_etag_support):
+
+        merged_arg_spec = dict()
+        merged_arg_spec.update(self.ONEVIEW_COMMON_ARGS)
+
+        if validate_etag_support:
+            merged_arg_spec.update(self.ONEVIEW_VALIDATE_ETAG_ARGS)
+
+        if additional_arg_spec:
+            merged_arg_spec.update(additional_arg_spec)
+
+        return merged_arg_spec
+
+    def __check_hpe_oneview_sdk(self):
         if not HAS_HPE_ONEVIEW:
             self.module.fail_json(msg=self.HPE_ONEVIEW_SDK_REQUIRED)
 
