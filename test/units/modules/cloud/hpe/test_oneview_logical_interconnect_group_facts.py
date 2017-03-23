@@ -49,7 +49,6 @@ class LogicalInterconnectGroupFactsSpec(unittest.TestCase, FactsParamsTestCase):
         self.logical_interconnect_groups = self.mock_ov_client.logical_interconnect_groups
         FactsParamsTestCase.configure_client_mock(self, self.logical_interconnect_groups)
 
-
     def test_should_get_all_ligs(self):
         self.logical_interconnect_groups.get_all.return_value = PRESENT_LIGS
         self.mock_ansible_module.params = PARAMS_GET_ALL

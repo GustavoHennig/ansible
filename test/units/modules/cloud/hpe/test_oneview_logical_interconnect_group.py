@@ -96,13 +96,9 @@ PARAMS_FOR_ABSENT = dict(
 
 class LogicalInterconnectGroupGeneralSpec(unittest.TestCase,
                                           OneViewBaseTestCase):
-
-
     def setUp(self):
         self.configure_mocks(self, LogicalInterconnectGroupModule)
         self.resource = self.mock_ov_client.logical_interconnect_groups
-
-
 
     def test_should_create_new_lig(self):
         self.resource.get_by.return_value = []
@@ -141,7 +137,8 @@ class LogicalInterconnectGroupGeneralSpec(unittest.TestCase,
 
         LogicalInterconnectGroupModule().run()
 
-        self.mock_ansible_module.fail_json.assert_called_once_with(msg=LogicalInterconnectGroupModule.INTERCONNECT_TYPE_NOT_FOUND)
+        self.mock_ansible_module.fail_json.assert_called_once_with(
+            msg=LogicalInterconnectGroupModule.INTERCONNECT_TYPE_NOT_FOUND)
 
     def test_should_not_update_when_data_is_equals(self):
         self.resource.get_by.return_value = [DEFAULT_LIG_TEMPLATE]
@@ -200,7 +197,6 @@ class LogicalInterconnectGroupGeneralSpec(unittest.TestCase,
         LogicalInterconnectGroupModule().run()
 
         self.resource.create.assert_called_once_with(PARAMS_TO_RENAME['data'])
-
 
     def test_should_remove_lig(self):
         self.resource.get_by.return_value = [DEFAULT_LIG_TEMPLATE]
