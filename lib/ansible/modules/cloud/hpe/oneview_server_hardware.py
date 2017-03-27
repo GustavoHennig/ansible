@@ -138,7 +138,6 @@ server_hardware:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-
 from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewResourceNotFound, HPOneViewValueError
 
 

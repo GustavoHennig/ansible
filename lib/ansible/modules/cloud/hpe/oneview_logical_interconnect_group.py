@@ -103,7 +103,7 @@ class LogicalInterconnectGroupModule(OneViewModuleBase):
     MSG_UPDATED = 'Logical Interconnect Group updated successfully.'
     MSG_DELETED = 'Logical Interconnect Group deleted successfully.'
     MSG_ALREADY_EXIST = 'Logical Interconnect Group already exists.'
-    MSG_ALREADY_ABSENT = 'Nothing to do.'
+    MSG_ALREADY_ABSENT = 'Logical Interconnect Group is already absent.'
     INTERCONNECT_TYPE_NOT_FOUND = 'Interconnect Type was not found.'
     RESOURCE_FACT_NAME = 'logical_interconnect_group'
 

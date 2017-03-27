@@ -51,7 +51,7 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
-- name: Ensure that a Fibre Channel Network is present using the default configuration
+- name: Ensure that the Fibre Channel Network is present using the default configuration
   oneview_fc_network:
     config: "{{ config_file_path }}"
     state: present
@@ -66,7 +66,7 @@ EXAMPLES = '''
       name: 'New FC Network'
       fabricType: 'DirectAttach'
 
-- name: Ensure that Fibre Channel Network is absent
+- name: Ensure that the Fibre Channel Network is absent
   oneview_fc_network:
     config: "{{ config_file_path }}"
     state: absent
@@ -94,14 +94,14 @@ class FcNetworkModule(OneViewModuleBase):
     RESOURCE_FACT_NAME = 'fc_network'
 
     def __init__(self):
-        
+
         add_arg_spec = dict(data=dict(required=True, type='dict'),
                             state=dict(
                                 required=True,
                                 choices=['present', 'absent']))
 
         super(FcNetworkModule, self).__init__(additional_arg_spec=add_arg_spec,
-            validate_etag_support=True)
+                                              validate_etag_support=True)
 
         self.resource_client = self.oneview_client.fc_networks
 
