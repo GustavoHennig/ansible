@@ -34,6 +34,7 @@ requirements:
     - "python >= 2.7.9"
     - "hpOneView >= 3.1.0"
 author: "Gustavo Hennig (@GustavoHennig)"
+options:
     state:
         description:
             - Indicates the desired state for the Storage Volume Template resource.
