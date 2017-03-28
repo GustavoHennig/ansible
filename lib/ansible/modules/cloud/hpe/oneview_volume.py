@@ -207,8 +207,6 @@ class VolumeModule(OneViewModuleBase):
         self.resource_client = self.oneview_client.volumes
 
     def execute_module(self):
-        data = self.module.params['data'].copy()
-
         resource = self.get_by_name(self.data.get('name'))
 
         if self.state == 'present':
