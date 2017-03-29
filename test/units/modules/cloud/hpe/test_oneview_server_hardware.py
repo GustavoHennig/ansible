@@ -229,7 +229,7 @@ class ServerHardwareModuleSpec(unittest.TestCase,
         ServerHardwareModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=ServerHardwareModule.MSG_NOT_FOUND
+            msg=ServerHardwareModule.MSG_SERVER_HARDWARE_NOT_FOUND
         )
 
     def test_should_set_refresh_state(self):
@@ -254,7 +254,7 @@ class ServerHardwareModuleSpec(unittest.TestCase,
         ServerHardwareModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=ServerHardwareModule.MSG_NOT_FOUND
+            msg=ServerHardwareModule.MSG_SERVER_HARDWARE_NOT_FOUND
         )
 
     def test_should_set_ilo_firmware(self):
@@ -279,7 +279,7 @@ class ServerHardwareModuleSpec(unittest.TestCase,
         ServerHardwareModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=ServerHardwareModule.MSG_NOT_FOUND
+            msg=ServerHardwareModule.MSG_SERVER_HARDWARE_NOT_FOUND
         )
 
     def test_should_reset_ilo_state(self):

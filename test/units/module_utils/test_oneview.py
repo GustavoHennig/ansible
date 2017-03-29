@@ -100,7 +100,6 @@ class OneViewModuleBaseSpec(unittest.TestCase):
             ansible_facts={'ansible_facts': None}
         )
 
-
     def test_should_call_exit_json_adding_changed_false_when_undefined(self):
 
         self.mock_ansible_module.params = self.PARAMS_FOR_PRESENT
