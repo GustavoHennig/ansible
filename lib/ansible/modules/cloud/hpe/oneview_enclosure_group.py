@@ -94,7 +94,7 @@ enclosure_group:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewResourceNotFound
+from ansible.module_utils.oneview import OneViewModuleBase
 
 
 class EnclosureGroupModule(OneViewModuleBase):
@@ -102,7 +102,7 @@ class EnclosureGroupModule(OneViewModuleBase):
     MSG_UPDATED = 'Enclosure Group updated successfully.'
     MSG_DELETED = 'Enclosure Group deleted successfully.'
     MSG_ALREADY_EXIST = 'Enclosure Group already exists.'
-    MSG_ALREADY_ABSENT = 'Nothing to do.'
+    MSG_ALREADY_ABSENT = 'Enclosure Group is already absent.'
 
     argument_spec = dict(
         state=dict(
