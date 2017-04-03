@@ -48,7 +48,7 @@ PARAMS_GET_BY_NAME_WITHOUT_ETHERNET = dict(
 
 
 class NetworkSetFactsSpec(unittest.TestCase,
-                          FactsParamsTestCase                          ):
+                          FactsParamsTestCase):
     def setUp(self):
         self.configure_mocks(self, NetworkSetFactsModule)
         self.network_sets = self.mock_ov_client.network_sets

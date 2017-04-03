@@ -18,12 +18,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
-
 import unittest
 
+from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_group_facts import SasLogicalInterconnectGroupFactsModule
 from hpe_test_utils import FactsParamsTestCase
-
-from ansible.modules.cloud.hpe.oneview_logical_interconnect_group_facts import LogicalInterconnectGroupFactsModule
 
 ERROR_MSG = 'Fake message error'
 
@@ -34,41 +32,39 @@ PARAMS_GET_ALL = dict(
 
 PARAMS_GET_BY_NAME = dict(
     config='config.json',
-    name="Test Logical Interconnect Group"
+    name="SAS LIG 2"
 )
 
-PRESENT_LIGS = [{
-    "name": "Test Logical Interconnect Group",
-    "uri": "/rest/logical-interconnect-groups/ebb4ada8-08df-400e-8fac-9ff987ac5140"
-}]
+SAS_LIGS = [{"name": "SAS LIG 1"}, {"name": "SAS LIG 2"}]
 
 
-class LogicalInterconnectGroupFactsSpec(unittest.TestCase, FactsParamsTestCase):
+class SasLogicalInterconnectGroupFactsModuleSpec(unittest.TestCase,
+                                                 FactsParamsTestCase):
     def setUp(self):
-        self.configure_mocks(self, LogicalInterconnectGroupFactsModule)
-        self.logical_interconnect_groups = self.mock_ov_client.logical_interconnect_groups
-        FactsParamsTestCase.configure_client_mock(self, self.logical_interconnect_groups)
+        self.configure_mocks(self, SasLogicalInterconnectGroupFactsModule)
+        self.resource = self.mock_ov_client.sas_logical_interconnect_groups
+        FactsParamsTestCase.configure_client_mock(self, self.resource)
 
-    def test_should_get_all_ligs(self):
-        self.logical_interconnect_groups.get_all.return_value = PRESENT_LIGS
+    def test_should_get_all(self):
+        self.resource.get_all.return_value = SAS_LIGS
         self.mock_ansible_module.params = PARAMS_GET_ALL
 
-        LogicalInterconnectGroupFactsModule().run()
+        SasLogicalInterconnectGroupFactsModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(logical_interconnect_groups=(PRESENT_LIGS))
+            ansible_facts=dict(sas_logical_interconnect_groups=(SAS_LIGS))
         )
 
-    def test_should_get_lig_by_name(self):
-        self.logical_interconnect_groups.get_by.return_value = PRESENT_LIGS
+    def test_should_get_by_name(self):
+        self.resource.get_by.return_value = [SAS_LIGS[1]]
         self.mock_ansible_module.params = PARAMS_GET_BY_NAME
 
-        LogicalInterconnectGroupFactsModule().run()
+        SasLogicalInterconnectGroupFactsModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            ansible_facts=dict(logical_interconnect_groups=(PRESENT_LIGS))
+            ansible_facts=dict(sas_logical_interconnect_groups=([SAS_LIGS[1]]))
         )
 
 

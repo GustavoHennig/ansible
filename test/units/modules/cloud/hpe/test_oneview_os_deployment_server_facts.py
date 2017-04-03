@@ -35,7 +35,6 @@ SERVERS = [
 
 class OsDeploymentServerFactsSpec(unittest.TestCase,
                                   FactsParamsTestCase):
-
     def setUp(self):
         self.configure_mocks(self, OsDeploymentServerFactsModule)
         self.os_deployment_servers = self.mock_ov_client.os_deployment_servers
