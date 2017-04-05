@@ -361,7 +361,7 @@ class LogicalInterconnectFactsSpec(unittest.TestCase,
 
         LogicalInterconnectFactsModule().run()
 
-        self.mock_ansible_module.fail_json.assert_called_once_with(msg=LOGICAL_INTERCONNECT_NOT_FOUND)
+        self.mock_ansible_module.fail_json.assert_called_once_with(msg=LogicalInterconnectFactsModule.MSG_NOT_FOUND)
 
 
 if __name__ == '__main__':

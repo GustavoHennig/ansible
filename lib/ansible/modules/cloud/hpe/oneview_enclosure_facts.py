@@ -128,7 +128,7 @@ enclosure_utilization:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from _ansible.module_utils.oneview import OneViewModuleBase
+from ansible.module_utils.oneview import OneViewModuleBase
 
 
 class EnclosureFactsModule(OneViewModuleBase):
