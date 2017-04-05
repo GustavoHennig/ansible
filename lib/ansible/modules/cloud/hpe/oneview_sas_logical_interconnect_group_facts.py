@@ -94,7 +94,7 @@ class SasLogicalInterconnectGroupFactsModule(OneViewModuleBase):
             name = self.module.params['name']
             resources = self.oneview_client.sas_logical_interconnect_groups.get_by('name', name)
         else:
-            resources = self.oneview_client.sas_logical_interconnect_groups.get_all(**self.params)
+            resources = self.oneview_client.sas_logical_interconnect_groups.get_all(**self.facts_params)
 
         return dict(changed=False,
                     ansible_facts=dict(sas_logical_interconnect_groups=resources))

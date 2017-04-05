@@ -126,7 +126,7 @@ class LogicalEnclosureFactsModule(OneViewModuleBase):
             if self.options and logical_enclosures:
                 ansible_facts = self.__gather_optional_facts(self.options, logical_enclosures[0])
         else:
-            logical_enclosures = self.oneview_client.logical_enclosures.get_all(**self.params)
+            logical_enclosures = self.oneview_client.logical_enclosures.get_all(**self.facts_params)
 
         ansible_facts['logical_enclosures'] = logical_enclosures
 

@@ -126,7 +126,7 @@ class EnclosureGroupFactsModule(OneViewModuleBase):
             if enclosure_groups and "configuration_script" in self.options:
                 facts["enclosure_group_script"] = self.__get_script(enclosure_groups)
         else:
-            enclosure_groups = self.oneview_client.enclosure_groups.get_all(**self.params)
+            enclosure_groups = self.oneview_client.enclosure_groups.get_all(**self.facts_params)
 
         facts["enclosure_groups"] = enclosure_groups
         return dict(changed=False, ansible_facts=facts)

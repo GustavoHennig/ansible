@@ -94,7 +94,7 @@ class InterconnectLinkTopologyFactsModule(OneViewModuleBase):
         if name:
             interconnect_link_topologies = self.oneview_client.interconnect_link_topologies.get_by('name', name)
         else:
-            interconnect_link_topologies = self.oneview_client.interconnect_link_topologies.get_all(**self.params)
+            interconnect_link_topologies = self.oneview_client.interconnect_link_topologies.get_all(**self.facts_params)
 
         return dict(changed=False,
                     ansible_facts=dict(interconnect_link_topologies=interconnect_link_topologies))

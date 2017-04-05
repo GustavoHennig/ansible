@@ -96,7 +96,7 @@ class SasInterconnectTypeFactsModule(OneViewModuleBase):
         if self.module.params.get('name'):
             types = self.oneview_client.sas_interconnect_types.get_by('name', self.module.params.get('name'))
         else:
-            types = self.oneview_client.sas_interconnect_types.get_all(**self.params)
+            types = self.oneview_client.sas_interconnect_types.get_all(**self.facts_params)
 
         return dict(changed=False,
                     ansible_facts=dict(sas_interconnect_types=types))

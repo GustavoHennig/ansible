@@ -126,7 +126,7 @@ class NetworkSetFactsModule(OneViewModuleBase):
         elif name:
             network_sets = self.oneview_client.network_sets.get_by('name', name)
         else:
-            network_sets = self.oneview_client.network_sets.get_all(**self.params)
+            network_sets = self.oneview_client.network_sets.get_all(**self.facts_params)
 
         return dict(changed=False,
                     ansible_facts=dict(network_sets=network_sets))

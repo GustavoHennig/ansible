@@ -151,7 +151,7 @@ class StorageSystemFactsModule(OneViewModuleBase):
         elif self.module.params.get('name'):
             storage_systems = self.oneview_client.storage_systems.get_by_name(self.module.params['name'])
         else:
-            storage_systems = self.oneview_client.storage_systems.get_all(**self.params)
+            storage_systems = self.oneview_client.storage_systems.get_all(**self.facts_params)
             is_specific_storage_system = False
 
         self.__get_options(facts, storage_systems, is_specific_storage_system)

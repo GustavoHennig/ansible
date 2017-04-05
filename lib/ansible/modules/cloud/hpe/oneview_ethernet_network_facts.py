@@ -129,7 +129,7 @@ class EthernetNetworkFactsModule(OneViewModuleBase):
             if self.module.params.get('options') and ethernet_networks:
                 ansible_facts = self.__gather_optional_facts(ethernet_networks[0])
         else:
-            ethernet_networks = self.resource_client.get_all(**self.params)
+            ethernet_networks = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts['ethernet_networks'] = ethernet_networks
 

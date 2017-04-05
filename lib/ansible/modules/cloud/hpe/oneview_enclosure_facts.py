@@ -151,7 +151,7 @@ class EnclosureFactsModule(OneViewModuleBase):
             if self.options and enclosures:
                 ansible_facts = self.__gather_optional_facts(self.options, enclosures[0])
         else:
-            enclosures = self.oneview_client.enclosures.get_all(**self.params)
+            enclosures = self.oneview_client.enclosures.get_all(**self.facts_params)
 
         ansible_facts['enclosures'] = enclosures
 

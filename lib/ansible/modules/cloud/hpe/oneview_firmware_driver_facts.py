@@ -104,7 +104,7 @@ class FirmwareDriverFactsModule(OneViewModuleBase):
         if name:
             result = self.resource_client.get_by('name', name)
         else:
-            result = self.resource_client.get_all(**self.params)
+            result = self.resource_client.get_all(**self.facts_params)
 
         return dict(
             changed=False,

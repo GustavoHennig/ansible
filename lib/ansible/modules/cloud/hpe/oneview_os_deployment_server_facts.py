@@ -137,7 +137,7 @@ class OsDeploymentServerFactsModule(OneViewModuleBase):
             os_deployment_servers = self.oneview_client.os_deployment_servers.get_by('name',
                                                                                      self.module.params['name'])
         else:
-            os_deployment_servers = self.oneview_client.os_deployment_servers.get_all(**self.params)
+            os_deployment_servers = self.oneview_client.os_deployment_servers.get_all(**self.facts_params)
 
         if self.options:
             ansible_facts = self.__gather_optional_facts(self.options)
