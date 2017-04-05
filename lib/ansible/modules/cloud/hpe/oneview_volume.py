@@ -19,9 +19,9 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 
-ANSIBLE_METADATA = {'status': ['stableinterface'],
-                    'supported_by': 'committer',
-                    'version': '1.0'}
+ANSIBLE_METADATA = {'metadata_version': '1.0',
+                    'status': ['stableinterface'],
+                    'supported_by': 'curated'}
 
 DOCUMENTATION = '''
 ---
@@ -126,7 +126,7 @@ EXAMPLES = '''
       name: 'Volume with Storage Pool - Renamed'
 
 - name: Create a new snapshot for the specified volume
-    oneview_volume:
+  oneview_volume:
     config: '{{ config_path }}'
     state: snapshot_created
     data:
@@ -137,7 +137,7 @@ EXAMPLES = '''
         description: 'New snapshot'
 
 - name: Delete the snapshot
-    oneview_volume:
+  oneview_volume:
     config: '{{ config_path }}'
     state: snapshot_deleted
     data:

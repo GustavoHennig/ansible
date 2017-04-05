@@ -32,15 +32,15 @@ from ansible.module_utils.oneview import (HPOneViewException,
                                           ResourceComparator)
 
 from ansible.modules.cloud.hpe.oneview_server_profile import (ServerProfileModule,
-      					                                      MAKE_COMPLIANT_NOT_SUPPORTED,
-						                                      SERVER_PROFILE_CREATED,
-						                                      REMEDIATED_COMPLIANCE,
-						                                      ALREADY_COMPLIANT,
-						                                      SERVER_PROFILE_DELETED,
-						                                      SERVER_PROFILE_UPDATED,
-						                                      SERVER_ALREADY_UPDATED,
-						                                      ERROR_ALLOCATE_SERVER_HARDWARE,
-						                                      SERVER_PROFILE_ALREADY_ABSENT)
+                                                              MAKE_COMPLIANT_NOT_SUPPORTED,
+                                                              SERVER_PROFILE_CREATED,
+                                                              REMEDIATED_COMPLIANCE,
+                                                              ALREADY_COMPLIANT,
+                                                              SERVER_PROFILE_DELETED,
+                                                              SERVER_PROFILE_UPDATED,
+                                                              SERVER_ALREADY_UPDATED,
+                                                              ERROR_ALLOCATE_SERVER_HARDWARE,
+                                                              SERVER_PROFILE_ALREADY_ABSENT)
 
 from hpe_test_utils import OneViewBaseTestCase
 
@@ -1502,7 +1502,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
         self.mock_ansible_module.params = deepcopy(PARAMS_FOR_PRESENT)
 
         ServerProfileModule().run()
-                        
+
         mock_deep_merge.assert_called_once_with(server_profile, PARAMS_FOR_PRESENT['data'])
 
     @mock.patch.object(ResourceComparator, 'compare')
