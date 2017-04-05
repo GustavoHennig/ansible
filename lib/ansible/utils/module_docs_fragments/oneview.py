@@ -41,7 +41,7 @@ notes:
     '''
 
     VALIDATEETAG = '''
-options:    
+options:
     validate_etag:
         description:
             - When the ETag Validation is enabled, the request will be conditionally processed only if the current ETag
@@ -51,7 +51,7 @@ options:
 '''
 
     FACTSPARAMS = '''
-options:    
+options:
     params:
         description:
         - List of params to delimit, filter and sort the list of resources.
