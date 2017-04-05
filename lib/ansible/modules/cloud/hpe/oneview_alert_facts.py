@@ -19,8 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
-                    'supported_by': 'committer',
-                    'version': '1.0'}
+                    'supported_by': 'curated',
+                    'metadata_version': '1.0'}
 
 DOCUMENTATION = '''
 module: oneview_alert_facts

@@ -18,9 +18,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
-ANSIBLE_METADATA = {'status': ['stableinterface'],
-                    'supported_by': 'committer',
-                    'version': '1.0'}
+ANSIBLE_METADATA = {'metadata_version': '1.0',
+                    'status': ['stableinterface'],
+                    'supported_by': 'curated'}
 
 DOCUMENTATION = '''
 module: oneview_managed_san_facts
@@ -169,7 +169,7 @@ class ManagedSanFactsModule(OneViewModuleBase):
         return dict(changed=False, ansible_facts=facts)
 
     def __get_sub_options(self, option):
-        return option if type(option) is dict else {}
+        return option if isinstance(option, dict) else {}
 
 
 def main():
