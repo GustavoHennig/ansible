@@ -95,7 +95,7 @@ class LogicalInterconnectGroupFactsModule(OneViewModuleBase):
         if self.module.params.get('name'):
             ligs = self.oneview_client.logical_interconnect_groups.get_by('name', self.module.params['name'])
         else:
-            ligs = self.oneview_client.logical_interconnect_groups.get_all(**self.params)
+            ligs = self.oneview_client.logical_interconnect_groups.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(logical_interconnect_groups=ligs))
 

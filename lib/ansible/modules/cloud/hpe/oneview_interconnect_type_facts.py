@@ -95,7 +95,7 @@ class InterconnectTypeFactsModule(OneViewModuleBase):
         if self.module.params.get('name'):
             interconnect_types = self.oneview_client.interconnect_types.get_by('name', self.module.params['name'])
         else:
-            interconnect_types = self.oneview_client.interconnect_types.get_all(**self.params)
+            interconnect_types = self.oneview_client.interconnect_types.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(interconnect_types=interconnect_types))
 

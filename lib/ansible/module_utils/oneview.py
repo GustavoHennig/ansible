@@ -88,7 +88,7 @@ class OneViewModuleBase(object):
         self.data = self.module.params.get('data')
 
         # Preload params for get_all - used by facts
-        self.params = self.module.params.get('params') or {}
+        self.facts_params = self.module.params.get('params') or {}
 
         # Preload options as dict - used by facts
         self.options = self.transform_list_to_dict(self.module.params.get('options'))

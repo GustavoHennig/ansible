@@ -119,7 +119,7 @@ class StorageVolumeTemplateFactsModule(OneViewModuleBase):
         if self.module.params.get('name'):
             storage_volume_template = self.resource_client.get_by('name', self.module.params['name'])
         else:
-            storage_volume_template = self.resource_client.get_all(**self.params)
+            storage_volume_template = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts = dict(storage_volume_templates=storage_volume_template)
 

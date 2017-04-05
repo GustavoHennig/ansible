@@ -127,7 +127,7 @@ class OsDeploymentPlanFactsModule(OneViewModuleBase):
                 ansible_facts.update(option_facts)
 
         else:
-            os_deployment_plans = self.oneview_client.os_deployment_plans.get_all(**self.params)
+            os_deployment_plans = self.oneview_client.os_deployment_plans.get_all(**self.facts_params)
 
         ansible_facts['os_deployment_plans'] = os_deployment_plans
 

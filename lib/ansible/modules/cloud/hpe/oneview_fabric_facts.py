@@ -118,7 +118,7 @@ class FabricFactsModule(OneViewModuleBase):
             if self.options and fabrics:
                 ansible_facts = self.__gather_optional_facts(fabrics[0])
         else:
-            fabrics = self.oneview_client.fabrics.get_all(**self.params)
+            fabrics = self.oneview_client.fabrics.get_all(**self.facts_params)
 
         ansible_facts['fabrics'] = fabrics
 

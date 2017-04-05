@@ -142,7 +142,7 @@ class VolumeFactsModule(OneViewModuleBase):
             ansible_facts['storage_volumes'] = self.resource_client.get_by('name', self.module.params['name'])
             ansible_facts.update(self.__gather_facts_about_one_volume(ansible_facts['storage_volumes']))
         else:
-            ansible_facts['storage_volumes'] = self.resource_client.get_all(**self.params)
+            ansible_facts['storage_volumes'] = self.resource_client.get_all(**self.facts_params)
 
         ansible_facts.update(self.__gather_facts_from_appliance())
 

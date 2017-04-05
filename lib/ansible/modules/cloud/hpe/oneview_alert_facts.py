@@ -90,7 +90,7 @@ class AlertFactsModule(OneViewModuleBase):
         super(AlertFactsModule, self).__init__(additional_arg_spec=argument_spec)
 
     def execute_module(self):
-        facts = self.oneview_client.alerts.get_all(**self.params)
+        facts = self.oneview_client.alerts.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(alerts=facts))
 

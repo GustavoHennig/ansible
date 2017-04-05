@@ -96,7 +96,7 @@ class StoragePoolFactsModule(OneViewModuleBase):
         if self.module.params.get('name'):
             storage_pool = self.oneview_client.storage_pools.get_by('name', self.module.params['name'])
         else:
-            storage_pool = self.oneview_client.storage_pools.get_all(**self.params)
+            storage_pool = self.oneview_client.storage_pools.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(storage_pools=storage_pool))
 

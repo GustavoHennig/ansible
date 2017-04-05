@@ -205,7 +205,7 @@ class LogicalInterconnectFactsModule(OneViewModuleBase):
         if name:
             facts = self.__get_by_name(name)
         else:
-            logical_interconnects = self.resource_client.get_all(**self.params)
+            logical_interconnects = self.resource_client.get_all(**self.facts_params)
             facts = dict(logical_interconnects=logical_interconnects)
 
         return dict(changed=False, ansible_facts=facts)

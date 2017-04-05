@@ -159,7 +159,7 @@ class PowerDeviceFactsModule(OneViewModuleBase):
             if self.options and power_devices:
                 ansible_facts = self.gather_option_facts(self.options, power_devices[0])
         else:
-            power_devices = self.oneview_client.power_devices.get_all(**self.params)
+            power_devices = self.oneview_client.power_devices.get_all(**self.facts_params)
 
         ansible_facts["power_devices"] = power_devices
 

@@ -190,7 +190,7 @@ class StorageVolumeAttachmentFactsModule(OneViewModuleBase):
             attachments = self.__get_specific_attachment(params)
             self.__get_paths(attachments, self.options, facts)
         else:
-            attachments = client.get_all(**self.params)
+            attachments = client.get_all(**self.facts_params)
 
         facts['storage_volume_attachments'] = attachments
 

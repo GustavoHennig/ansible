@@ -202,7 +202,7 @@ class ServerHardwareFactsModule(OneViewModuleBase):
                 ansible_facts = self.gather_option_facts(self.options, server_hardwares[0])
 
         else:
-            server_hardwares = self.oneview_client.server_hardware.get_all(**self.params)
+            server_hardwares = self.oneview_client.server_hardware.get_all(**self.facts_params)
 
         if self.options and self.options.get('firmwares'):
             ansible_facts['server_hardware_firmwares'] = self.get_all_firmwares(self.options)

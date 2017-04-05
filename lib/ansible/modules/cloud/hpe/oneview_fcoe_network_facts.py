@@ -95,7 +95,7 @@ class FcoeNetworkFactsModule(OneViewModuleBase):
         if self.module.params['name']:
             fcoe_networks = self.oneview_client.fcoe_networks.get_by('name', self.module.params['name'])
         else:
-            fcoe_networks = self.oneview_client.fcoe_networks.get_all(**self.params)
+            fcoe_networks = self.oneview_client.fcoe_networks.get_all(**self.facts_params)
 
         return dict(changed=False,
                     ansible_facts=dict(fcoe_networks=fcoe_networks))
