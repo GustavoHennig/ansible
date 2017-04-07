@@ -19,8 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 ANSIBLE_METADATA = {'metadata_version': '1.0',
-                     'status': ['stableinterface'],
-                     'supported_by': 'curated'}
+                    'status': ['stableinterface'],
+                    'supported_by': 'curated'}
 
 DOCUMENTATION = '''
 ---
@@ -100,18 +100,11 @@ from ansible.module_utils.oneview import OneViewModuleBase
 
 
 class EnclosureGroupFactsModule(OneViewModuleBase):
-    argument_spec = {
-        "name": {
-            "required": False,
-            "type": 'str'},
-        "options": {
-            "required": False,
-            "type": "list"
-        },
-        "params": {
-            "required": False,
-            "type": "dict"
-        }}
+    argument_spec = dict(
+        name=dict(required=False, type='str'),
+        options=dict(required=False, type='list'),
+        params=dict(required=False, type='dict')
+    )
 
     def __init__(self):
         super(EnclosureGroupFactsModule, self).__init__(additional_arg_spec=self.argument_spec)

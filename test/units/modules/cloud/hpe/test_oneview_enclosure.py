@@ -18,11 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 import unittest
-from hpe_test_utils import OneViewBaseTestCase
-from copy import deepcopy
 import yaml
 
-from ansible.modules.cloud.hpe.oneview_enclosure import EnclosureModule
+from copy import deepcopy
+from oneview_module_loader import EnclosureModule
+from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
 DEFAULT_ENCLOSURE_NAME = 'Test-Enclosure'

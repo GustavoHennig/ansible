@@ -19,10 +19,9 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import mock
 import yaml
 
-from ansible.modules.cloud.hpe.oneview_enclosure_group import EnclosureGroupModule
+from oneview_module_loader import EnclosureGroupModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
