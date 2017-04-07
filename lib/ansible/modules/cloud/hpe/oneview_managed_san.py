@@ -123,16 +123,15 @@ managed_san_issues:
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewResourceNotFound, ResourceComparator
 
-MANAGED_SAN_UPDATED = 'Managed SAN updated successfully.'
-MANAGED_SAN_REFRESH_STATE_UPDATED = 'Managed SAN\'s refresh state changed successfully.'
-MANAGED_SAN_NOT_FOUND = 'Managed SAN was not found for this operation.'
-MANAGED_SAN_NO_CHANGES_PROVIDED = 'The Managed SAN is already compliant.'
-MANAGED_SAN_ENDPOINTS_CSV_FILE_CREATED = 'SAN endpoints CSV file created successfully.'
-MANAGED_SAN_ISSUES_REPORT_CREATED = 'Unexpected zoning report created successfully.'
-HPE_ONEVIEW_SDK_REQUIRED = 'HPE OneView Python SDK is required for this module.'
-
 
 class ManagedSanModule(OneViewModuleBase):
+    MSG_UPDATED = 'Managed SAN updated successfully.'
+    MSG_REFRESH_STATE_UPDATED = 'Managed SAN\'s refresh state changed successfully.'
+    MSG_NOT_FOUND = 'Managed SAN was not found for this operation.'
+    MSG_NO_CHANGES_PROVIDED = 'The Managed SAN is already compliant.'
+    MSG_ENDPOINTS_CSV_FILE_CREATED = 'SAN endpoints CSV file created successfully.'
+    MSG_ISSUES_REPORT_CREATED = 'Unexpected zoning report created successfully.'
+
     argument_spec = dict(
         state=dict(
             required=True,
@@ -148,7 +147,7 @@ class ManagedSanModule(OneViewModuleBase):
         resource = self.__get_resource(self.data)
 
         if not resource:
-            raise HPOneViewResourceNotFound(MANAGED_SAN_NOT_FOUND)
+            raise HPOneViewResourceNotFound(self.MSG_NOT_FOUND)
 
         if self.state == 'present':
             exit_status = self.__update(self.data, resource)
@@ -170,11 +169,11 @@ class ManagedSanModule(OneViewModuleBase):
 
         if ResourceComparator.compare(resource, merged_data):
             changed = False
-            msg = MANAGED_SAN_NO_CHANGES_PROVIDED
+            msg = self.MSG_NO_CHANGES_PROVIDED
         else:
             changed = True
             resource = self.oneview_client.managed_sans.update(resource['uri'], data)
-            msg = MANAGED_SAN_UPDATED
+            msg = self.MSG_UPDATED
 
         return dict(changed=changed,
                     msg=msg,
@@ -184,21 +183,21 @@ class ManagedSanModule(OneViewModuleBase):
         resource = self.oneview_client.managed_sans.update(resource['uri'], data['refreshStateData'])
 
         return dict(changed=True,
-                    msg=MANAGED_SAN_REFRESH_STATE_UPDATED,
+                    msg=self.MSG_REFRESH_STATE_UPDATED,
                     ansible_facts=dict(managed_san=resource))
 
     def __create_endpoints_csv_file(self, resource):
         resource = self.oneview_client.managed_sans.create_endpoints_csv_file(resource['uri'])
 
         return dict(changed=True,
-                    msg=MANAGED_SAN_ENDPOINTS_CSV_FILE_CREATED,
+                    msg=self.MSG_ENDPOINTS_CSV_FILE_CREATED,
                     ansible_facts=dict(managed_san_endpoints=resource))
 
     def __create_issue_report(self, resource):
         resource = self.oneview_client.managed_sans.create_issues_report(resource['uri'])
 
         return dict(changed=True,
-                    msg=MANAGED_SAN_ISSUES_REPORT_CREATED,
+                    msg=self.MSG_ISSUES_REPORT_CREATED,
                     ansible_facts=dict(managed_san_issues=resource))
 
 
