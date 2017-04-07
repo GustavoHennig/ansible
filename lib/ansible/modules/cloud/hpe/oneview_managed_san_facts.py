@@ -158,8 +158,7 @@ class ManagedSanFactsModule(OneViewModuleBase):
                     facts['managed_san_endpoints'] = environmental_configuration
 
         else:
-            params = self.module.params.get('params') or {}
-            facts['managed_sans'] = self.resource_client.get_all(**params)
+            facts['managed_sans'] = self.resource_client.get_all(**self.facts_params)
 
         if self.options:
             if self.options.get('wwn'):

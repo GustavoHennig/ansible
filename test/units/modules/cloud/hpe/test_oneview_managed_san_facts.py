@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_managed_san_facts import ManagedSanFactsModule
+from oneview_module_loader import ManagedSanFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 

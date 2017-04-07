@@ -19,13 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_managed_san import (ManagedSanModule,
-                                                           MANAGED_SAN_UPDATED,
-                                                           MANAGED_SAN_REFRESH_STATE_UPDATED,
-                                                           MANAGED_SAN_NOT_FOUND,
-                                                           MANAGED_SAN_NO_CHANGES_PROVIDED,
-                                                           MANAGED_SAN_ENDPOINTS_CSV_FILE_CREATED,
-                                                           MANAGED_SAN_ISSUES_REPORT_CREATED)
+from oneview_module_loader import ManagedSanModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -88,7 +82,7 @@ class ManagedSanModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=MANAGED_SAN_NO_CHANGES_PROVIDED,
+            msg=ManagedSanModule.MSG_NO_CHANGES_PROVIDED,
             ansible_facts=dict(managed_san=MANAGED_SAN)
         )
 
@@ -101,7 +95,7 @@ class ManagedSanModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=MANAGED_SAN_UPDATED,
+            msg=ManagedSanModule.MSG_UPDATED,
             ansible_facts=dict(managed_san=MANAGED_SAN)
         )
 
@@ -112,7 +106,7 @@ class ManagedSanModuleSpec(unittest.TestCase,
         ManagedSanModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=MANAGED_SAN_NOT_FOUND
+            msg=ManagedSanModule.MSG_NOT_FOUND
         )
 
     def test_update_refresh_state(self):
@@ -124,7 +118,7 @@ class ManagedSanModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=MANAGED_SAN_REFRESH_STATE_UPDATED,
+            msg=ManagedSanModule.MSG_REFRESH_STATE_UPDATED,
             ansible_facts=dict(managed_san=MANAGED_SAN)
         )
 
@@ -135,7 +129,7 @@ class ManagedSanModuleSpec(unittest.TestCase,
         ManagedSanModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=MANAGED_SAN_NOT_FOUND
+            msg=ManagedSanModule.MSG_NOT_FOUND
         )
 
     def test_create_endpoints_csv_file(self):
@@ -148,7 +142,7 @@ class ManagedSanModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=MANAGED_SAN_ENDPOINTS_CSV_FILE_CREATED,
+            msg=ManagedSanModule.MSG_ENDPOINTS_CSV_FILE_CREATED,
             ansible_facts=dict(managed_san_endpoints=endpoints_csv_file)
         )
 
@@ -159,7 +153,7 @@ class ManagedSanModuleSpec(unittest.TestCase,
         ManagedSanModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=MANAGED_SAN_NOT_FOUND
+            msg=ManagedSanModule.MSG_NOT_FOUND
         )
 
     def test_create_issues_report(self):
@@ -172,7 +166,7 @@ class ManagedSanModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=MANAGED_SAN_ISSUES_REPORT_CREATED,
+            msg=ManagedSanModule.MSG_ISSUES_REPORT_CREATED,
             ansible_facts=dict(managed_san_issues=issues_report)
         )
 
@@ -183,5 +177,9 @@ class ManagedSanModuleSpec(unittest.TestCase,
         ManagedSanModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=MANAGED_SAN_NOT_FOUND
+            msg=ManagedSanModule.MSG_NOT_FOUND
         )
+
+
+if __name__ == '__main__':
+    unittest.main()
