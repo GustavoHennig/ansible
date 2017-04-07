@@ -23,24 +23,15 @@ import unittest
 import mock
 
 from copy import deepcopy
-from ansible.module_utils.oneview import (HPOneViewException,
-                                          HPOneViewTaskError,
-                                          OneViewModuleBase,
-                                          SPKeys,
-                                          ServerProfileMerger,
-                                          ServerProfileReplaceNamesByUris,
-                                          ResourceComparator)
 
-from ansible.modules.cloud.hpe.oneview_server_profile import (ServerProfileModule,
-                                                              MAKE_COMPLIANT_NOT_SUPPORTED,
-                                                              SERVER_PROFILE_CREATED,
-                                                              REMEDIATED_COMPLIANCE,
-                                                              ALREADY_COMPLIANT,
-                                                              SERVER_PROFILE_DELETED,
-                                                              SERVER_PROFILE_UPDATED,
-                                                              SERVER_ALREADY_UPDATED,
-                                                              ERROR_ALLOCATE_SERVER_HARDWARE,
-                                                              SERVER_PROFILE_ALREADY_ABSENT)
+from oneview_module_loader import (ServerProfileModule,
+                                   HPOneViewException,
+                                   HPOneViewTaskError,
+                                   OneViewModuleBase,
+                                   SPKeys,
+                                   ServerProfileMerger,
+                                   ServerProfileReplaceNamesByUris,
+                                   ResourceComparator)
 
 from hpe_test_utils import OneViewBaseTestCase
 
@@ -51,7 +42,7 @@ ENCLOSURE_GROUP_URI = "/rest/enclosure-groups/ad5e9e88-b858-4935-ba58-017d60a17c
 TEMPLATE_URI = '/rest/server-profile-templates/9a156b04-fce8-40b0-b0cd-92ced1311dda'
 FAKE_SERVER_HARDWARE = {'uri': '/rest/server-hardware/31393736-3831-4753-567h-30335837524E'}
 
-MESSAGE_COMPLIANT_ERROR = MAKE_COMPLIANT_NOT_SUPPORTED.format(SERVER_PROFILE_NAME)
+MESSAGE_COMPLIANT_ERROR = ServerProfileModule.MSG_MAKE_COMPLIANT_NOT_SUPPORTED.format(SERVER_PROFILE_NAME)
 FAKE_MSG_ERROR = 'Fake message error'
 
 TASK_ERROR = HPOneViewTaskError(msg=FAKE_MSG_ERROR, error_code='AssignProfileToDeviceBayError')
@@ -261,7 +252,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
         ServerProfileModule().run()
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=False, msg=ALREADY_COMPLIANT, ansible_facts=mock_facts)
+            changed=False, msg=ServerProfileModule.MSG_ALREADY_COMPLIANT, ansible_facts=mock_facts)
 
     def test_should_update_when_not_compliant(self):
         fake_server = deepcopy(CREATED_BASIC_PROFILE)
@@ -278,7 +269,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
             CREATED_BASIC_PROFILE['uri'], 'replace', '/templateCompliance', 'Compliant')
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=True, msg=REMEDIATED_COMPLIANCE, ansible_facts=mock_facts)
+            changed=True, msg=ServerProfileModule.MSG_REMEDIATED_COMPLIANCE, ansible_facts=mock_facts)
 
     def test_should_power_off_when_is_offline_update(self):
         fake_server = deepcopy(CREATED_BASIC_PROFILE)
@@ -305,7 +296,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
         self.mock_ov_client.server_hardware.update_power_state.assert_has_calls(power_set_calls)
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
-            changed=True, msg=REMEDIATED_COMPLIANCE, ansible_facts=mock_facts)
+            changed=True, msg=ServerProfileModule.MSG_REMEDIATED_COMPLIANCE, ansible_facts=mock_facts)
 
     def test_should_create_with_automatically_selected_hardware_when_not_exists(self):
         profile_data = deepcopy(BASIC_PROFILE)
@@ -324,7 +315,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_CREATED,
+            msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
 
@@ -356,7 +347,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_CREATED,
+            msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
 
@@ -387,7 +378,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_CREATED,
+            msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
 
@@ -410,7 +401,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_CREATED,
+            msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
 
@@ -443,7 +434,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_CREATED,
+            msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
 
@@ -465,7 +456,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
         self.assertEqual(25, times_create_called)
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=ERROR_ALLOCATE_SERVER_HARDWARE
+            msg=ServerProfileModule.MSG_ERROR_ALLOCATE_SERVER_HARDWARE
         )
 
     def test_should_try_create_with_informed_hardware_2_times_when_not_exists(self):
@@ -492,7 +483,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_CREATED,
+            msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
 
@@ -512,7 +503,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
         self.assertEqual(25, times_create_called)
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=ERROR_ALLOCATE_SERVER_HARDWARE
+            msg=ServerProfileModule.MSG_ERROR_ALLOCATE_SERVER_HARDWARE
         )
 
     def test_should_fail_when_exception_is_not_related_with_server_hardware(self):
@@ -583,7 +574,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_CREATED,
+            msg=ServerProfileModule.MSG_CREATED,
             ansible_facts=mock_facts
         )
 
@@ -1387,7 +1378,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_UPDATED,
+            msg=ServerProfileModule.MSG_UPDATED,
             ansible_facts=mock_facts
         )
 
@@ -1416,7 +1407,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_UPDATED,
+            msg=ServerProfileModule.MSG_UPDATED,
             ansible_facts=mock_facts
         )
 
@@ -1433,7 +1424,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=SERVER_ALREADY_UPDATED,
+            msg=ServerProfileModule.MSG_ALREADY_UPDATED,
             ansible_facts=mock_facts
         )
 
@@ -1761,7 +1752,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=SERVER_PROFILE_ALREADY_ABSENT
+            msg=ServerProfileModule.MSG_ALREADY_ABSENT
         )
 
     def test_should_turn_off_hardware_before_delete(self):
@@ -1783,7 +1774,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_DELETED
+            msg=ServerProfileModule.MSG_DELETED
         )
 
     def test_should_not_turn_off_hardware_if_not_associated_before_delete(self):
@@ -1802,7 +1793,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SERVER_PROFILE_DELETED
+            msg=ServerProfileModule.MSG_DELETED
         )
 
 

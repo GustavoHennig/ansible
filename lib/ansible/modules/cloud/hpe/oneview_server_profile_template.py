@@ -102,18 +102,16 @@ from ansible.module_utils.oneview import (OneViewModuleBase,
                                           ServerProfileMerger,
                                           ResourceComparator)
 
-SRV_PROFILE_TEMPLATE_CREATED = 'Server Profile Template created successfully.'
-SRV_PROFILE_TEMPLATE_UPDATED = 'Server Profile Template updated successfully.'
-SRV_PROFILE_TEMPLATE_DELETED = 'Server Profile Template deleted successfully.'
-SRV_PROFILE_TEMPLATE_ALREADY_EXIST = 'Server Profile Template already exists.'
-SRV_PROFILE_TEMPLATE_ALREADY_ABSENT = 'Server Profile Template is already absent.'
-SRV_PROFILE_TEMPLATE_SRV_HW_TYPE_NOT_FOUND = 'Server Hardware Type not found: '
-SRV_PROFILE_TEMPLATE_ENCLOSURE_GROUP_NOT_FOUND = 'Enclosure Group not found: '
-
-HPE_ONEVIEW_SDK_REQUIRED = 'HPE OneView Python SDK is required for this module.'
-
 
 class ServerProfileTemplateModule(OneViewModuleBase):
+    MSG_CREATED = 'Server Profile Template created successfully.'
+    MSG_UPDATED = 'Server Profile Template updated successfully.'
+    MSG_DELETED = 'Server Profile Template deleted successfully.'
+    MSG_ALREADY_EXIST = 'Server Profile Template already exists.'
+    MSG_ALREADY_ABSENT = 'Server Profile Template is already absent.'
+    MSG_SRV_HW_TYPE_NOT_FOUND = 'Server Hardware Type not found: '
+    MSG_ENCLOSURE_GROUP_NOT_FOUND = 'Enclosure Group not found: '
+
     argument_spec = dict(
         state=dict(
             required=True,
@@ -157,7 +155,7 @@ class ServerProfileTemplateModule(OneViewModuleBase):
 
     def __create(self, data):
         resource = self.resource_client.create(data)
-        return True, SRV_PROFILE_TEMPLATE_CREATED, resource
+        return True, self.MSG_CREATED, resource
 
     def __update(self, data, template):
         resource = template.copy()
@@ -167,21 +165,21 @@ class ServerProfileTemplateModule(OneViewModuleBase):
         equal = ResourceComparator.compare(merged_data, resource)
 
         if equal:
-            msg = SRV_PROFILE_TEMPLATE_ALREADY_EXIST
+            msg = self.MSG_ALREADY_EXIST
         else:
             resource = self.resource_client.update(resource=merged_data, id_or_uri=merged_data["uri"])
-            msg = SRV_PROFILE_TEMPLATE_UPDATED
+            msg = self.MSG_UPDATED
 
         changed = not equal
 
         return changed, msg, resource
 
     def __absent(self, template):
-        msg = SRV_PROFILE_TEMPLATE_ALREADY_ABSENT
+        msg = self.MSG_ALREADY_ABSENT
 
         if template:
             self.resource_client.delete(template)
-            msg = SRV_PROFILE_TEMPLATE_DELETED
+            msg = self.MSG_DELETED
 
         changed = template is not None
         return dict(changed=changed, msg=msg)

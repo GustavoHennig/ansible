@@ -173,28 +173,28 @@ from copy import deepcopy
 # e.g.: export LOGFILE=/tmp/ansible-oneview.log
 logger = OneViewModuleBase.get_logger(__file__)
 
-ASSIGN_HARDWARE_ERROR_CODES = ['AssignProfileToDeviceBayError',
-                               'EnclosureBayUnavailableForProfile',
-                               'ProfileAlreadyExistsInServer']
-
-TEMPLATE_NOT_FOUND = "Informed Server Profile Template '{}' not found"
-HARDWARE_NOT_FOUND = "Informed Server Hardware '{}' not found"
-SERVER_PROFILE_CREATED = "Server Profile created."
-SERVER_ALREADY_UPDATED = 'Server Profile is already updated.'
-SERVER_PROFILE_UPDATED = 'Server profile updated'
-SERVER_PROFILE_DELETED = 'Deleted profile'
-SERVER_PROFILE_ALREADY_ABSENT = 'Nothing do.'
-REMEDIATED_COMPLIANCE = "Remediated compliance issues"
-ALREADY_COMPLIANT = "Server Profile is already compliant."
-SERVER_PROFILE_NOT_FOUND = "Server Profile is required for this operation."
-ERROR_ALLOCATE_SERVER_HARDWARE = 'Could not allocate server hardware'
-MAKE_COMPLIANT_NOT_SUPPORTED = "Update from template is not supported for server profile '{}' because it is not " \
-                               "associated with a server profile template."
-
-CONCURRENCY_FAILOVER_RETRIES = 25
-
 
 class ServerProfileModule(OneViewModuleBase):
+    ASSIGN_HARDWARE_ERROR_CODES = ['AssignProfileToDeviceBayError',
+                                   'EnclosureBayUnavailableForProfile',
+                                   'ProfileAlreadyExistsInServer']
+
+    MSG_TEMPLATE_NOT_FOUND = "Informed Server Profile Template '{}' not found"
+    MSG_HARDWARE_NOT_FOUND = "Informed Server Hardware '{}' not found"
+    MSG_CREATED = "Server Profile created."
+    MSG_ALREADY_UPDATED = 'Server Profile is already updated.'
+    MSG_UPDATED = 'Server profile updated'
+    MSG_DELETED = 'Deleted profile'
+    MSG_ALREADY_ABSENT = 'Nothing do.'
+    MSG_REMEDIATED_COMPLIANCE = "Remediated compliance issues"
+    MSG_ALREADY_COMPLIANT = "Server Profile is already compliant."
+    MSG_NOT_FOUND = "Server Profile is required for this operation."
+    MSG_ERROR_ALLOCATE_SERVER_HARDWARE = 'Could not allocate server hardware'
+    MSG_MAKE_COMPLIANT_NOT_SUPPORTED = "Update from template is not supported for server profile '{}' because it is" \
+                                       " not associated with a server profile template."
+
+    CONCURRENCY_FAILOVER_RETRIES = 25
+
     argument_spec = dict(
         state=dict(
             required=False,
@@ -209,7 +209,6 @@ class ServerProfileModule(OneViewModuleBase):
     )
 
     def __init__(self):
-
         super(ServerProfileModule, self).__init__(additional_arg_spec=self.argument_spec,
                                                   validate_etag_support=True)
 
@@ -250,13 +249,13 @@ class ServerProfileModule(OneViewModuleBase):
         if server_hardware_name:
             selected_server_hardware = self.__get_server_hardware_by_name(server_hardware_name)
             if not selected_server_hardware:
-                raise HPOneViewValueError(HARDWARE_NOT_FOUND.format(server_hardware_name))
+                raise HPOneViewValueError(self.MSG_HARDWARE_NOT_FOUND.format(server_hardware_name))
             data['serverHardwareUri'] = selected_server_hardware['uri']
 
         if server_template_name:
             server_template = self.oneview_client.server_profile_templates.get_by_name(server_template_name)
             if not server_template:
-                raise HPOneViewValueError(TEMPLATE_NOT_FOUND.format(server_template_name))
+                raise HPOneViewValueError(self.MSG_TEMPLATE_NOT_FOUND.format(server_template_name))
             data['serverProfileTemplateUri'] = server_template['uri']
         elif data.get('serverProfileTemplateUri'):
             server_template = self.oneview_client.server_profile_templates.get(data['serverProfileTemplateUri'])
@@ -265,16 +264,16 @@ class ServerProfileModule(OneViewModuleBase):
             resource = self.__create_profile(data, server_template)
             changed = True
             created = True
-            msg = SERVER_PROFILE_CREATED
+            msg = self.MSG_CREATED
         else:
             merged_data = ServerProfileMerger().merge_data(resource, data)
 
             if not ResourceComparator.compare(resource, merged_data):
                 resource = self.__update_server_profile(merged_data)
                 changed = True
-                msg = SERVER_PROFILE_UPDATED
+                msg = self.MSG_UPDATED
             else:
-                msg = SERVER_ALREADY_UPDATED
+                msg = self.MSG_ALREADY_UPDATED
 
         return created, changed, msg, resource
 
@@ -297,7 +296,7 @@ class ServerProfileModule(OneViewModuleBase):
         tries = 0
         self.__remove_inconsistent_data(data)
 
-        while tries < CONCURRENCY_FAILOVER_RETRIES:
+        while tries < self.CONCURRENCY_FAILOVER_RETRIES:
             try:
                 tries += 1
 
@@ -320,7 +319,7 @@ class ServerProfileModule(OneViewModuleBase):
 
             except HPOneViewTaskError as task_error:
                 logger.exception("Error code: {} Message: {}".format(str(task_error.error_code), str(task_error.msg)))
-                if task_error.error_code in ASSIGN_HARDWARE_ERROR_CODES:
+                if task_error.error_code in self.ASSIGN_HARDWARE_ERROR_CODES:
                     # if this is because the server is already assigned, someone grabbed it before we assigned,
                     # ignore and try again
                     # This waiting time was chosen empirically and it could differ according to the hardware.
@@ -328,7 +327,7 @@ class ServerProfileModule(OneViewModuleBase):
                 else:
                     raise task_error
 
-        raise HPOneViewException(ERROR_ALLOCATE_SERVER_HARDWARE)
+        raise HPOneViewException(self.MSG_ERROR_ALLOCATE_SERVER_HARDWARE)
 
     def __build_new_profile_data(self, data, server_template, server_hardware_uri):
 
@@ -410,22 +409,22 @@ class ServerProfileModule(OneViewModuleBase):
 
     def __delete_profile(self, server_profile):
         if not server_profile:
-            return False, SERVER_PROFILE_ALREADY_ABSENT
+            return False, self.MSG_ALREADY_ABSENT
 
         if server_profile.get('serverHardwareUri'):
             self.__set_server_hardware_power_state(server_profile['serverHardwareUri'], 'Off')
 
         self.oneview_client.server_profiles.delete(server_profile)
-        return True, SERVER_PROFILE_DELETED
+        return True, self.MSG_DELETED
 
     def __make_compliant(self, server_profile):
 
         changed = False
-        msg = ALREADY_COMPLIANT
+        msg = self.MSG_ALREADY_COMPLIANT
 
         if not server_profile.get('serverProfileTemplateUri'):
             logger.error("Make the Server Profile compliant is not supported for this profile")
-            self.module.fail_json(msg=MAKE_COMPLIANT_NOT_SUPPORTED.format(server_profile['name']))
+            self.module.fail_json(msg=self.MSG_MAKE_COMPLIANT_NOT_SUPPORTED.format(server_profile['name']))
 
         elif server_profile['templateCompliance'] != 'Compliant':
             logger.debug(
@@ -451,7 +450,7 @@ class ServerProfileModule(OneViewModuleBase):
                 self.__set_server_hardware_power_state(server_profile['serverHardwareUri'], 'On')
 
             changed = True
-            msg = REMEDIATED_COMPLIANCE
+            msg = self.MSG_REMEDIATED_COMPLIANCE
 
         return changed, msg, server_profile
 
