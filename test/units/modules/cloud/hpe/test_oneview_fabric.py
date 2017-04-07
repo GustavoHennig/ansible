@@ -20,7 +20,7 @@
 
 import unittest
 from hpe_test_utils import OneViewBaseTestCase
-from ansible.modules.cloud.hpe.oneview_fabric import FabricModule
+from oneview_module_loader import FabricModule
 
 FAKE_MSG_ERROR = 'Fake message error'
 NO_CHANGE_MSG = 'No change found'

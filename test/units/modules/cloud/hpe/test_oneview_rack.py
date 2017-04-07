@@ -19,7 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_rack import RackModule
+from oneview_module_loader import RackModule
 from hpe_test_utils import OneViewBaseTestCase
 
 

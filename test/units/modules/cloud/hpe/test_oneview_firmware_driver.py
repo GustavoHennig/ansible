@@ -19,7 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-from ansible.modules.cloud.hpe.oneview_firmware_driver import FirmwareDriverModule
+from oneview_module_loader import FirmwareDriverModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FIRMWARE_DRIVER_NAME = "Service Pack for ProLiant.iso"

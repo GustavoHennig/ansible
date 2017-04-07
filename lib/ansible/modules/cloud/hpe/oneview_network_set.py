@@ -96,7 +96,7 @@ class NetworkSetModule(OneViewModuleBase):
     MSG_DELETED = 'Network Set deleted successfully.'
     MSG_ALREADY_EXIST = 'Network Set already exists.'
     MSG_ALREADY_ABSENT = 'Network Set is already absent.'
-    NETWORK_SET_ENET_NETWORK_NOT_FOUND = 'Ethernet network not found: '
+    MSG_ETHERNET_NETWORK_NOT_FOUND = 'Ethernet Network not found: '
     RESOURCE_FACT_NAME = 'network_set'
 
     argument_spec = dict(
@@ -132,7 +132,7 @@ class NetworkSetModule(OneViewModuleBase):
             if enet_network:
                 return enet_network['uri']
             else:
-                raise HPOneViewResourceNotFound(self.NETWORK_SET_ENET_NETWORK_NOT_FOUND + network_name_or_uri)
+                raise HPOneViewResourceNotFound(self.MSG_ETHERNET_NETWORK_NOT_FOUND + network_name_or_uri)
 
     def __replace_network_name_by_uri(self, data):
         if 'networkUris' in data:

@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import yaml
-import unittest
 
-from ansible.modules.cloud.hpe.oneview_connection_template import ConnectionTemplateModule
+from oneview_module_loader import ConnectionTemplateModule
 from hpe_test_utils import OneViewBaseTestCase
 
 

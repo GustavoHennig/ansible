@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_logical_interconnect_facts import LogicalInterconnectFactsModule
+from oneview_module_loader import LogicalInterconnectFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'

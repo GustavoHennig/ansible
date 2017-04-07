@@ -21,7 +21,7 @@
 import unittest
 from copy import deepcopy
 
-from ansible.modules.cloud.hpe.oneview_logical_interconnect_group import LogicalInterconnectGroupModule
+from oneview_module_loader import LogicalInterconnectGroupModule
 
 from hpe_test_utils import OneViewBaseTestCase
 

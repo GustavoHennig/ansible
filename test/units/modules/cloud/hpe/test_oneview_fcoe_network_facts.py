@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_fcoe_network_facts import FcoeNetworkFactsModule
+from oneview_module_loader import FcoeNetworkFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'
