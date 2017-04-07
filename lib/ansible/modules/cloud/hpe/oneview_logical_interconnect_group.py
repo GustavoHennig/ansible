@@ -103,7 +103,8 @@ class LogicalInterconnectGroupModule(OneViewModuleBase):
     MSG_DELETED = 'Logical Interconnect Group deleted successfully.'
     MSG_ALREADY_EXIST = 'Logical Interconnect Group already exists.'
     MSG_ALREADY_ABSENT = 'Logical Interconnect Group is already absent.'
-    INTERCONNECT_TYPE_NOT_FOUND = 'Interconnect Type was not found.'
+    MSG_INTERCONNECT_TYPE_NOT_FOUND = 'Interconnect Type was not found.'
+
     RESOURCE_FACT_NAME = 'logical_interconnect_group'
 
     def __init__(self):
@@ -142,7 +143,7 @@ class LogicalInterconnectGroupModule(OneViewModuleBase):
         if i_type:
             return i_type[0]
         else:
-            raise HPOneViewResourceNotFound(self.INTERCONNECT_TYPE_NOT_FOUND)
+            raise HPOneViewResourceNotFound(self.MSG_INTERCONNECT_TYPE_NOT_FOUND)
 
 
 def main():

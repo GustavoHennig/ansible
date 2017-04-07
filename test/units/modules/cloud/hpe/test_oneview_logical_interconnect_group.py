@@ -138,7 +138,7 @@ class LogicalInterconnectGroupGeneralSpec(unittest.TestCase,
         LogicalInterconnectGroupModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=LogicalInterconnectGroupModule.INTERCONNECT_TYPE_NOT_FOUND)
+            msg=LogicalInterconnectGroupModule.MSG_INTERCONNECT_TYPE_NOT_FOUND)
 
     def test_should_not_update_when_data_is_equals(self):
         self.resource.get_by.return_value = [DEFAULT_LIG_TEMPLATE]
