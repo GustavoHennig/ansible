@@ -19,16 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 import unittest
 from copy import deepcopy
-
-from ansible.modules.cloud.hpe.oneview_server_profile_template import (ServerProfileTemplateModule,
-                                                                       SRV_PROFILE_TEMPLATE_SRV_HW_TYPE_NOT_FOUND,
-                                                                       SRV_PROFILE_TEMPLATE_ENCLOSURE_GROUP_NOT_FOUND,
-                                                                       SRV_PROFILE_TEMPLATE_CREATED,
-                                                                       SRV_PROFILE_TEMPLATE_UPDATED,
-                                                                       SRV_PROFILE_TEMPLATE_ALREADY_EXIST,
-                                                                       SRV_PROFILE_TEMPLATE_DELETED,
-                                                                       SRV_PROFILE_TEMPLATE_ALREADY_ABSENT)
-
+from oneview_module_loader import ServerProfileTemplateModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -111,7 +102,7 @@ class ServerProfileTemplateModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SRV_PROFILE_TEMPLATE_CREATED,
+            msg=ServerProfileTemplateModule.MSG_CREATED,
             ansible_facts=dict(server_profile_template=CREATED_BASIC_TEMPLATE)
         )
 
@@ -125,7 +116,7 @@ class ServerProfileTemplateModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=SRV_PROFILE_TEMPLATE_ALREADY_EXIST,
+            msg=ServerProfileTemplateModule.MSG_ALREADY_EXIST,
             ansible_facts=dict(server_profile_template=CREATED_BASIC_TEMPLATE)
         )
 
@@ -146,7 +137,7 @@ class ServerProfileTemplateModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SRV_PROFILE_TEMPLATE_UPDATED,
+            msg=ServerProfileTemplateModule.MSG_UPDATED,
             ansible_facts=dict(server_profile_template=CREATED_BASIC_TEMPLATE)
         )
 
@@ -167,7 +158,7 @@ class ServerProfileTemplateModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SRV_PROFILE_TEMPLATE_UPDATED,
+            msg=ServerProfileTemplateModule.MSG_UPDATED,
             ansible_facts=dict(server_profile_template=CREATED_BASIC_TEMPLATE)
         )
 
@@ -182,7 +173,7 @@ class ServerProfileTemplateModuleSpec(unittest.TestCase,
         ServerProfileTemplateModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=SRV_PROFILE_TEMPLATE_SRV_HW_TYPE_NOT_FOUND + 'Srv HW Type Name'
+            msg=ServerProfileTemplateModule.MSG_SRV_HW_TYPE_NOT_FOUND + 'Srv HW Type Name'
         )
 
     def test_should_fail_when_enclosure_group_not_found(self):
@@ -196,7 +187,7 @@ class ServerProfileTemplateModuleSpec(unittest.TestCase,
         ServerProfileTemplateModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=SRV_PROFILE_TEMPLATE_ENCLOSURE_GROUP_NOT_FOUND + 'EG Name'
+            msg=ServerProfileTemplateModule.MSG_ENCLOSURE_GROUP_NOT_FOUND + 'EG Name'
         )
 
     def test_should_delete_when_template_exists(self):
@@ -210,7 +201,7 @@ class ServerProfileTemplateModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=SRV_PROFILE_TEMPLATE_DELETED
+            msg=ServerProfileTemplateModule.MSG_DELETED
         )
 
     def test_should_do_nothing_when_templates_not_exists(self):
@@ -222,7 +213,7 @@ class ServerProfileTemplateModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=SRV_PROFILE_TEMPLATE_ALREADY_ABSENT
+            msg=ServerProfileTemplateModule.MSG_ALREADY_ABSENT
         )
 
 

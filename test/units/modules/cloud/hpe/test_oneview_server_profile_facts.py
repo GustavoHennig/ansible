@@ -21,7 +21,7 @@
 import unittest
 
 from hpe_test_utils import FactsParamsTestCase
-from ansible.modules.cloud.hpe.oneview_server_profile_facts import ServerProfileFactsModule
+from oneview_module_loader import ServerProfileFactsModule
 from copy import deepcopy
 
 ERROR_MSG = 'Fake message error'
@@ -230,7 +230,7 @@ class ServerProfileFactsSpec(unittest.TestCase,
                            }
         )
 
-    def test_should_get_server_profiles_with_invalid_options(self):
+    def test_should_get_server_profiles_with_invalid_profile_ports_option(self):
         mock_option_return = {'subresource': 'value'}
 
         self.mock_ov_client.server_profiles.get_by.return_value = [{"name": "Server Profile Name", "uri": PROFILE_URI}]

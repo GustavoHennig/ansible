@@ -96,8 +96,7 @@ class FcNetworkFactsModule(OneViewModuleBase):
         if self.module.params['name']:
             fc_networks = self.oneview_client.fc_networks.get_by('name', self.module.params['name'])
         else:
-            params = self.module.params.get('params') or {}
-            fc_networks = self.oneview_client.fc_networks.get_all(**params)
+            fc_networks = self.oneview_client.fc_networks.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(fc_networks=fc_networks))
 

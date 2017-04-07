@@ -94,8 +94,7 @@ logical_interconnect_group:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.oneview import OneViewModuleBase
-from hpOneView.exceptions import HPOneViewResourceNotFound
+from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewResourceNotFound
 
 
 class LogicalInterconnectGroupModule(OneViewModuleBase):

@@ -21,7 +21,7 @@
 import unittest
 
 from hpe_test_utils import FactsParamsTestCase
-from ansible.modules.cloud.hpe.oneview_server_profile_template_facts import ServerProfileTemplateFactsModule
+from oneview_module_loader import ServerProfileTemplateFactsModule
 
 ERROR_MSG = 'Fake message error'
 TEMPLATE_NAME = "ProfileTemplate101"
