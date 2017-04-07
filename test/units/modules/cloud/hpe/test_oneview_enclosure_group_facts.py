@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_enclosure_group_facts import EnclosureGroupFactsModule
+from oneview_module_loader import EnclosureGroupFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'
