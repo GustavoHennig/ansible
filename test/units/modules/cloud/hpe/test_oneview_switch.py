@@ -76,7 +76,7 @@ class SwitchModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=SwitchModule.MSG_NOT_FOUND
+            msg=SwitchModule.MSG_ALREADY_ABSENT
         )
 
     def test_should_update_switch_ports(self):

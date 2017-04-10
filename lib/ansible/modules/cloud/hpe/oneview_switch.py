@@ -66,6 +66,7 @@ from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewValueError,
 
 class SwitchModule(OneViewModuleBase):
     MSG_DELETED = 'Switch deleted successfully.'
+    MSG_ALREADY_ABSENT = 'Switch is already absent.'
     MSG_PORTS_UPDATED = "Switch ports updated successfully."
     MSG_NOT_FOUND = 'Switch not found.'
 
@@ -86,19 +87,12 @@ class SwitchModule(OneViewModuleBase):
         resource = self.get_by_name(self.module.params.get('name'))
 
         if self.state == 'absent':
-            return self.__delete(resource)
+            return self.resource_absent(resource)
 
         if not resource:
             raise HPOneViewResourceNotFound(self.MSG_NOT_FOUND)
         else:
             return self.__update_ports(resource)
-
-    def __delete(self, resource):
-        if resource:
-            self.resource_client.delete(resource)
-            return dict(changed=True, msg=self.MSG_DELETED)
-        else:
-            return dict(changed=False, msg=self.MSG_NOT_FOUND)
 
     def __update_ports(self, resource):
         self.resource_client.update_ports(id_or_uri=resource["uri"], ports=self.data)
