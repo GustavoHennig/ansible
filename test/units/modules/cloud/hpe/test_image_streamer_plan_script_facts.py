@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
 
-from ansible.modules.cloud.hpe.image_streamer_plan_script_facts import PlanScriptFactsModule, EXAMPLES
+from oneview_module_loader import PlanScriptFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'
@@ -40,10 +39,8 @@ class PlanScriptFactsSpec(unittest.TestCase,
         FactsParamsTestCase.configure_client_mock(self, self.i3s.plan_scripts)
 
         # Load scenarios from module examples
-        self.PLAN_SCRIPT_FACTS_EXAMPLES = yaml.load(EXAMPLES)
-
-        self.TASK_GET_ALL = self.PLAN_SCRIPT_FACTS_EXAMPLES[0]['image_streamer_plan_script_facts']
-        self.TASK_GET_BY_NAME = self.PLAN_SCRIPT_FACTS_EXAMPLES[4]['image_streamer_plan_script_facts']
+        self.TASK_GET_ALL = self.EXAMPLES[0]['image_streamer_plan_script_facts']
+        self.TASK_GET_BY_NAME = self.EXAMPLES[4]['image_streamer_plan_script_facts']
 
         self.PLAN_SCRIPT = dict(
             name="Plan Script name",

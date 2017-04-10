@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
 
-from ansible.modules.cloud.hpe.image_streamer_deployment_group_facts import DeploymentGroupFactsModule, EXAMPLES
+from oneview_module_loader import DeploymentGroupFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 
@@ -38,10 +37,8 @@ class DeploymentGroupFactsSpec(unittest.TestCase,
         FactsParamsTestCase.configure_client_mock(self, self.i3s.deployment_groups)
 
         # Load scenarios from module examples
-        self.DEPLOYMENT_GROUP_FACTS_EXAMPLES = yaml.load(EXAMPLES)
-
-        self.TASK_GET_ALL = self.DEPLOYMENT_GROUP_FACTS_EXAMPLES[0]['image_streamer_deployment_group_facts']
-        self.TASK_GET_BY_NAME = self.DEPLOYMENT_GROUP_FACTS_EXAMPLES[4]['image_streamer_deployment_group_facts']
+        self.TASK_GET_ALL = self.EXAMPLES[0]['image_streamer_deployment_group_facts']
+        self.TASK_GET_BY_NAME = self.EXAMPLES[4]['image_streamer_deployment_group_facts']
 
         self.DEPLOYMENT_GROUP = dict(
             name="OSS",

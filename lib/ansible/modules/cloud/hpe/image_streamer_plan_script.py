@@ -37,8 +37,8 @@ options:
     state:
         description:
             - Indicates the desired state for the Plan Script resource.
-              C(present) will ensure data properties are compliant with OneView.
-              C(absent) will remove the resource from OneView, if it exists.
+              C(present) will ensure data properties are compliant with Synergy Image Streamer.
+              C(absent) will remove the resource from Synergy Image Streamer, if it exists.
               C(differences_retrieved) will retrieve the modified contents of the Plan Script as per
               the selected attributes.
         choices: ['present', 'absent', 'differences_retrieved']

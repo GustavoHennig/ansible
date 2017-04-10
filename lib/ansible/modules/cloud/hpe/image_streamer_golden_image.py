@@ -37,8 +37,8 @@ options:
     state:
         description:
             - Indicates the desired state for the Golden Image resource.
-              C(present) will ensure data properties are compliant with OneView.
-              C(absent) will remove the resource from OneView, if it exists.
+              C(present) will ensure data properties are compliant with Synergy Image Streamer.
+              C(absent) will remove the resource from Synergy Image Streamer, if it exists.
               C(downloaded) will download the Golden Image to the file path provided.
               C(archive_downloaded) will download the Golden Image archive to the file path provided.
         choices: ['present', 'absent', 'downloaded', 'archive_downloaded']

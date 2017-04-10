@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
 
-from ansible.modules.cloud.hpe.image_streamer_os_volume_facts import OsVolumeFactsModule, EXAMPLES
+from oneview_module_loader import OsVolumeFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'
@@ -40,10 +39,8 @@ class OsVolumeFactsSpec(unittest.TestCase,
         FactsParamsTestCase.configure_client_mock(self, self.i3s.os_volumes)
 
         # Load scenarios from module examples
-        self.OS_VOLUME_FACTS_EXAMPLES = yaml.load(EXAMPLES)
-
-        self.PLAY_GET_ALL = self.OS_VOLUME_FACTS_EXAMPLES[0]['image_streamer_os_volume_facts']
-        self.PLAY_GET_BY_NAME = self.OS_VOLUME_FACTS_EXAMPLES[4]['image_streamer_os_volume_facts']
+        self.PLAY_GET_ALL = self.EXAMPLES[0]['image_streamer_os_volume_facts']
+        self.PLAY_GET_BY_NAME = self.EXAMPLES[4]['image_streamer_os_volume_facts']
 
         self.OS_VOLUME = dict(
             name="OS Volume Name",

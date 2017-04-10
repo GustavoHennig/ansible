@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
 
-from ansible.modules.cloud.hpe.image_streamer_golden_image import GoldenImageModule, EXAMPLES
+from oneview_module_loader import GoldenImageModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -39,13 +38,12 @@ class GoldenImageSpec(unittest.TestCase,
         self.i3s = self.mock_ov_client.create_image_streamer_client()
 
         # Load scenarios from module examples
-        self.GOLDEN_IMAGE_EXAMPLES = yaml.load(EXAMPLES)
-        self.GOLDEN_IMAGE_CREATE = self.GOLDEN_IMAGE_EXAMPLES[0]['image_streamer_golden_image']
-        self.GOLDEN_IMAGE_UPLOAD = self.GOLDEN_IMAGE_EXAMPLES[1]['image_streamer_golden_image']
-        self.GOLDEN_IMAGE_UPDATE = self.GOLDEN_IMAGE_EXAMPLES[2]['image_streamer_golden_image']
-        self.GOLDEN_IMAGE_DOWNLOAD = self.GOLDEN_IMAGE_EXAMPLES[3]['image_streamer_golden_image']
-        self.GOLDEN_IMAGE_ARCHIVE_DOWNLOAD = self.GOLDEN_IMAGE_EXAMPLES[4]['image_streamer_golden_image']
-        self.GOLDEN_IMAGE_DELETE = self.GOLDEN_IMAGE_EXAMPLES[5]['image_streamer_golden_image']
+        self.GOLDEN_IMAGE_CREATE = self.EXAMPLES[0]['image_streamer_golden_image']
+        self.GOLDEN_IMAGE_UPLOAD = self.EXAMPLES[1]['image_streamer_golden_image']
+        self.GOLDEN_IMAGE_UPDATE = self.EXAMPLES[2]['image_streamer_golden_image']
+        self.GOLDEN_IMAGE_DOWNLOAD = self.EXAMPLES[3]['image_streamer_golden_image']
+        self.GOLDEN_IMAGE_ARCHIVE_DOWNLOAD = self.EXAMPLES[4]['image_streamer_golden_image']
+        self.GOLDEN_IMAGE_DELETE = self.EXAMPLES[5]['image_streamer_golden_image']
 
     def test_create_new_golden_image(self):
         self.i3s.golden_images.get_by.return_value = []

@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
 
-from ansible.modules.cloud.hpe.image_streamer_plan_script import PlanScriptModule, EXAMPLES
+from oneview_module_loader import PlanScriptModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -38,11 +37,10 @@ class PlanScriptSpec(unittest.TestCase,
         self.i3s = self.mock_ov_client.create_image_streamer_client()
 
         # Load scenarios from module examples
-        self.PLAN_SCRIPT_EXAMPLES = yaml.load(EXAMPLES)
-        self.PLAN_SCRIPT_CREATE = self.PLAN_SCRIPT_EXAMPLES[0]['image_streamer_plan_script']
-        self.PLAN_SCRIPT_UPDATE = self.PLAN_SCRIPT_EXAMPLES[1]['image_streamer_plan_script']
-        self.PLAN_SCRIPT_DIFFERENCES = self.PLAN_SCRIPT_EXAMPLES[2]['image_streamer_plan_script']
-        self.PLAN_SCRIPT_DELETE = self.PLAN_SCRIPT_EXAMPLES[4]['image_streamer_plan_script']
+        self.PLAN_SCRIPT_CREATE = self.EXAMPLES[0]['image_streamer_plan_script']
+        self.PLAN_SCRIPT_UPDATE = self.EXAMPLES[1]['image_streamer_plan_script']
+        self.PLAN_SCRIPT_DIFFERENCES = self.EXAMPLES[2]['image_streamer_plan_script']
+        self.PLAN_SCRIPT_DELETE = self.EXAMPLES[4]['image_streamer_plan_script']
         self.PLAN_SCRIPT = dict(
             name="Plan Script name",
             uri="/rest/plan-scripts/d1c7b09a-6c7b-4ae0-b68e-ed208ccde1b0")

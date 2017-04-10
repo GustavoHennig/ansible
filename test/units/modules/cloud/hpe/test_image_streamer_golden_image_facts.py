@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
 
-from ansible.modules.cloud.hpe.image_streamer_golden_image_facts import GoldenImageFactsModule, EXAMPLES
+from oneview_module_loader import GoldenImageFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'
@@ -40,10 +39,8 @@ class GoldenImageFactsSpec(unittest.TestCase,
         FactsParamsTestCase.configure_client_mock(self, self.i3s.golden_images)
 
         # Load scenarios from module examples
-        self.GOLDEN_IMAGE_FACTS_EXAMPLES = yaml.load(EXAMPLES)
-
-        self.TASK_GET_ALL = self.GOLDEN_IMAGE_FACTS_EXAMPLES[0]['image_streamer_golden_image_facts']
-        self.TASK_GET_BY_NAME = self.GOLDEN_IMAGE_FACTS_EXAMPLES[4]['image_streamer_golden_image_facts']
+        self.TASK_GET_ALL = self.EXAMPLES[0]['image_streamer_golden_image_facts']
+        self.TASK_GET_BY_NAME = self.EXAMPLES[4]['image_streamer_golden_image_facts']
 
         self.GOLDEN_IMAGE = dict(
             name="Golden Image name",
