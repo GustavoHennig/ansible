@@ -63,8 +63,9 @@ from ansible.modules.cloud.hpe.oneview_fcoe_network_facts import FcoeNetworkFact
 from ansible.modules.cloud.hpe.oneview_firmware_bundle import FirmwareBundleModule
 from ansible.modules.cloud.hpe.oneview_firmware_driver import FirmwareDriverModule
 from ansible.modules.cloud.hpe.oneview_firmware_driver_facts import FirmwareDriverFactsModule
-# from ansible.modules.cloud.hpe.oneview_interconnect import InterconnectModule
-# from ansible.modules.cloud.hpe.oneview_interconnect_facts import InterconnectFactsModule
+from ansible.modules.cloud.hpe.oneview_interconnect import InterconnectModule
+from ansible.modules.cloud.hpe.oneview_interconnect_facts import InterconnectFactsModule
+from ansible.modules.cloud.hpe.oneview_interconnect_facts import EXAMPLES as EXAMPLES_INTERCONNECT_FACTS
 from ansible.modules.cloud.hpe.oneview_interconnect_link_topology_facts import InterconnectLinkTopologyFactsModule
 from ansible.modules.cloud.hpe.oneview_interconnect_type_facts import InterconnectTypeFactsModule
 # from ansible.modules.cloud.hpe.oneview_internal_link_set_facts import InternalLinkSetFactsModule
