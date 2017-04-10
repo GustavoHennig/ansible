@@ -90,8 +90,8 @@ from ansible.modules.cloud.hpe.oneview_power_device import PowerDeviceModule
 from ansible.modules.cloud.hpe.oneview_power_device_facts import PowerDeviceFactsModule
 from ansible.modules.cloud.hpe.oneview_rack import RackModule
 from ansible.modules.cloud.hpe.oneview_rack_facts import RackFactsModule
-# from ansible.modules.cloud.hpe.oneview_san_manager import SanManagerModule
-# from ansible.modules.cloud.hpe.oneview_san_manager_facts import SanManagerFactsModule
+from ansible.modules.cloud.hpe.oneview_san_manager import SanManagerModule
+from ansible.modules.cloud.hpe.oneview_san_manager_facts import SanManagerFactsModule
 # from ansible.modules.cloud.hpe.oneview_sas_interconnect import SasInterconnectModule
 # from ansible.modules.cloud.hpe.oneview_sas_interconnect_facts import SasInterconnectFactsModule
 from ansible.modules.cloud.hpe.oneview_sas_interconnect_type_facts import SasInterconnectTypeFactsModule
@@ -121,7 +121,7 @@ from ansible.modules.cloud.hpe.oneview_storage_volume_template import StorageVol
 from ansible.modules.cloud.hpe.oneview_storage_volume_template_facts import StorageVolumeTemplateFactsModule
 # from ansible.modules.cloud.hpe.oneview_switch import SwitchModule
 # from ansible.modules.cloud.hpe.oneview_switch_facts import SwitchFactsModule
-# from ansible.modules.cloud.hpe.oneview_switch_type_facts import SwitchTypeFactsModule
+from ansible.modules.cloud.hpe.oneview_switch_type_facts import SwitchTypeFactsModule
 # from ansible.modules.cloud.hpe.oneview_task_facts import TaskFactsModule
 # from ansible.modules.cloud.hpe.oneview_unmanaged_device import UnmanagedDeviceModule
 # from ansible.modules.cloud.hpe.oneview_unmanaged_device_facts import UnmanagedDeviceFactsModule
