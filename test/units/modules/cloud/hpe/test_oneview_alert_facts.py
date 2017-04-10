@@ -19,7 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-from ansible.modules.cloud.hpe.oneview_alert_facts import AlertFactsModule
+from oneview_module_loader import AlertFactsModule
 from hpe_test_utils import FactsParamsTestCase
 import copy
 

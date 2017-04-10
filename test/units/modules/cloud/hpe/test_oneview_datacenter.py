@@ -20,7 +20,7 @@
 import unittest
 import yaml
 
-from ansible.modules.cloud.hpe.oneview_datacenter import DatacenterModule
+from oneview_module_loader import DatacenterModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -155,7 +155,7 @@ class DatacenterModuleSpec(unittest.TestCase,
         DatacenterModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=DatacenterModule.RACK_NOT_FOUND
+            msg=DatacenterModule.MSG_RACK_NOT_FOUND
         )
 
 

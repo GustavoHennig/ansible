@@ -19,10 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
-
-from ansible.modules.cloud.hpe.oneview_os_deployment_server_facts import (OsDeploymentServerFactsModule,
-                                                                          EXAMPLES)
+from oneview_module_loader import OsDeploymentServerFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 SERVERS = [
@@ -41,7 +38,6 @@ class OsDeploymentServerFactsSpec(unittest.TestCase,
         FactsParamsTestCase.configure_client_mock(self, self.os_deployment_servers)
 
         # Load scenarios from module examples
-        self.EXAMPLES = yaml.load(EXAMPLES)
         self.PARAMS_GET_ALL = self.EXAMPLES[0]['oneview_os_deployment_server_facts']
         self.PARAMS_GET_BY_NAME = self.EXAMPLES[2]['oneview_os_deployment_server_facts']
         self.PARAMS_GET_BY_NAME_WITH_OPTIONS = self.EXAMPLES[4]['oneview_os_deployment_server_facts']

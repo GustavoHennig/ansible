@@ -19,7 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_storage_volume_attachment_facts import StorageVolumeAttachmentFactsModule
+from oneview_module_loader import StorageVolumeAttachmentFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'

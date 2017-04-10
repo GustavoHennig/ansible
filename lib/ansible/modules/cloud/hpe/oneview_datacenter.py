@@ -122,7 +122,7 @@ class DatacenterModule(OneViewModuleBase):
     MSG_ALREADY_EXIST = 'Data Center is already present.'
     MSG_DELETED = 'Data Center removed successfully.'
     MSG_ALREADY_ABSENT = 'Data Center is already absent.'
-    RACK_NOT_FOUND = 'Rack was not found.'
+    MSG_RACK_NOT_FOUND = 'Rack was not found.'
     RESOURCE_FACT_NAME = 'datacenter'
 
     argument_spec = dict(
@@ -162,7 +162,7 @@ class DatacenterModule(OneViewModuleBase):
         if racks:
             return racks[0]
         else:
-            raise HPOneViewResourceNotFound(self.RACK_NOT_FOUND)
+            raise HPOneViewResourceNotFound(self.MSG_RACK_NOT_FOUND)
 
 
 def main():

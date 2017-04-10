@@ -1,4 +1,4 @@
-# 2013, Michael DeHaan <michael.dehaan@gmail.com>
+# Copyright (2016-2017) Hewlett Packard Enterprise Development LP
 #
 # This file is part of Ansible
 #
@@ -9,12 +9,8 @@
 #
 # Ansible is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
-
-# Note: Do not add any code to this file.  module_utils may be a namespace
-# package when using Ansible-2.1+ Anything in this file may not be available
-# if one of the other packages in the namespace is loaded first.
+# along with Ansible. If not, see <http://www.gnu.org/licenses/>.

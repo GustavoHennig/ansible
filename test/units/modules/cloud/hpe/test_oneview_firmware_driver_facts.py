@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_firmware_driver_facts import FirmwareDriverFactsModule
+from oneview_module_loader import FirmwareDriverFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 FIRMWARE_DRIVER_NAME = "Service Pack for ProLiant.iso"

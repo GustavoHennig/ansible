@@ -19,7 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_network_set import NetworkSetModule
+from oneview_module_loader import NetworkSetModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -121,7 +121,7 @@ class NetworkSetModuleSpec(unittest.TestCase,
         NetworkSetModule().run()
 
         self.mock_ansible_module.fail_json.assert_called_once_with(
-            msg=NetworkSetModule.NETWORK_SET_ENET_NETWORK_NOT_FOUND + "Name of a Network"
+            msg=NetworkSetModule.MSG_ETHERNET_NETWORK_NOT_FOUND + "Name of a Network"
         )
 
     def test_should_remove_network(self):

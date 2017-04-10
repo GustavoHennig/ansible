@@ -85,13 +85,13 @@ from ansible.modules.cloud.hpe.oneview_network_set import NetworkSetModule
 from ansible.modules.cloud.hpe.oneview_network_set_facts import NetworkSetFactsModule
 from ansible.modules.cloud.hpe.oneview_os_deployment_plan_facts import OsDeploymentPlanFactsModule
 # from ansible.modules.cloud.hpe.oneview_os_deployment_server import OsDeploymentServerModule
-# from ansible.modules.cloud.hpe.oneview_os_deployment_server_facts import OsDeploymentServerFactsModule
+from ansible.modules.cloud.hpe.oneview_os_deployment_server_facts import OsDeploymentServerFactsModule
 from ansible.modules.cloud.hpe.oneview_power_device import PowerDeviceModule
 from ansible.modules.cloud.hpe.oneview_power_device_facts import PowerDeviceFactsModule
 from ansible.modules.cloud.hpe.oneview_rack import RackModule
 from ansible.modules.cloud.hpe.oneview_rack_facts import RackFactsModule
-# from ansible.modules.cloud.hpe.oneview_san_manager import SanManagerModule
-# from ansible.modules.cloud.hpe.oneview_san_manager_facts import SanManagerFactsModule
+from ansible.modules.cloud.hpe.oneview_san_manager import SanManagerModule
+from ansible.modules.cloud.hpe.oneview_san_manager_facts import SanManagerFactsModule
 # from ansible.modules.cloud.hpe.oneview_sas_interconnect import SasInterconnectModule
 # from ansible.modules.cloud.hpe.oneview_sas_interconnect_facts import SasInterconnectFactsModule
 from ansible.modules.cloud.hpe.oneview_sas_interconnect_type_facts import SasInterconnectTypeFactsModule

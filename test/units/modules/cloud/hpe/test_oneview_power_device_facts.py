@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_power_device_facts import PowerDeviceFactsModule
+from oneview_module_loader import PowerDeviceFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 

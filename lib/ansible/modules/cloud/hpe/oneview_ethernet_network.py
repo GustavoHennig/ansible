@@ -141,7 +141,7 @@ class EthernetNetworkModule(OneViewModuleBase):
     MSG_MISSING_BULK_CREATED = 'Some missing Ethernet Networks were created successfully.'
     MSG_BULK_ALREADY_EXIST = 'The specified Ethernet Networks already exist.'
     MSG_CONNECTION_TEMPLATE_RESET = 'Ethernet Network connection template was reset to the default.'
-    ETHERNET_NETWORK_NOT_FOUND = 'Ethernet Network was not found.'
+    MSG_ETHERNET_NETWORK_NOT_FOUND = 'Ethernet Network was not found.'
 
     RESOURCE_FACT_NAME = 'ethernet_network'
 
@@ -241,7 +241,7 @@ class EthernetNetworkModule(OneViewModuleBase):
     def __default_bandwidth_reset(self, resource):
 
         if not resource:
-            raise HPOneViewResourceNotFound(self.ETHERNET_NETWORK_NOT_FOUND)
+            raise HPOneViewResourceNotFound(self.MSG_ETHERNET_NETWORK_NOT_FOUND)
 
         default_connection_template = self.oneview_client.connection_templates.get_default()
 

@@ -19,7 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_firmware_bundle import FirmwareBundleModule
+from oneview_module_loader import FirmwareBundleModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'

@@ -22,7 +22,7 @@
 import unittest
 import yaml
 
-from ansible.modules.cloud.hpe.oneview_storage_volume_attachment import StorageVolumeAttachmentModule
+from oneview_module_loader import StorageVolumeAttachmentModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'

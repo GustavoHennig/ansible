@@ -21,7 +21,7 @@ import unittest
 import yaml
 
 from hpe_test_utils import OneViewBaseTestCase
-from ansible.modules.cloud.hpe.oneview_logical_enclosure import LogicalEnclosureModule
+from oneview_module_loader import LogicalEnclosureModule
 
 YAML_LOGICAL_ENCLOSURE = """
     config: "{{ config }}"
