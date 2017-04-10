@@ -48,6 +48,10 @@ options:
       description:
         - Switch name.
       required: true
+
+notes:
+    - This resource is only available on C7000 enclosures
+
 extends_documentation_fragment:
     - oneview
 '''
