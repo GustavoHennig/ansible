@@ -120,9 +120,9 @@ golden_image:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.oneview import (OneViewModuleBase, 
-                                          HPOneViewValueError, 
-                                          HPOneViewResourceNotFound, 
+from ansible.module_utils.oneview import (OneViewModuleBase,
+                                          HPOneViewValueError,
+                                          HPOneViewResourceNotFound,
                                           ResourceComparator)
 
 
