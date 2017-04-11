@@ -97,23 +97,35 @@ interconnect:
     type: complex
 '''
 
-from hpOneView.common import extract_id_from_uri
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import (OneViewModuleBase,
                                           HPOneViewResourceNotFound,
                                           HPOneViewValueError)
+from hpOneView.common import extract_id_from_uri
 
 
 class InterconnectModule(OneViewModuleBase):
-    MSG_MISSING_KEY = "You must provide the interconnect name or the interconnect ip address"
+    MSG_MISSING_KEY = "You must provide the interconnect name or the interconnect ip address."
+    MSG_POWERED_ON = "Interconnect Powered On successfully."
+    MSG_ALREADY_POWERED_ON = "Interconnect is already Powered On."
+    MSG_POWERED_OFF = "Interconnect Powered Off successfully."
+    MSG_ALREADY_POWERED_OFF = "Interconnect is already Powered Off."
+    MSG_UID_STATE_ON = "Interconnect UID turned On succesfully."
+    MSG_UID_STATE_ALREADY_ON = "Interconnect UID state is already On."
+    MSG_UID_STATE_OFF = "Interconnect UID turned Off succesfully."
+    MSG_UID_STATE_ALREADY_OFF = "Interconnect UID state is already Off."
+    MSG_RESET = 'Interconnect Device Reset successfully.'
+    MSG_PORTS_UPDATED = 'Interconnect ports updated successfully.'
+    MSG_PORTS_ALREADY_UPDATED = 'Interconnect ports already updated.'
+    MSG_RESET_PORT_PROTECTION = 'Port protection reset successfully.'
     MSG_INTERCONNECT_NOT_FOUND = "The Interconnect was not found."
 
     states = dict(
-        powered_on=dict(path='/powerState', value='On'),
-        powered_off=dict(path='/powerState', value='Off'),
-        uid_on=dict(path='/uidState', value='On'),
-        uid_off=dict(path='/uidState', value='Off'),
-        device_reset=dict(path='/deviceResetState', value='Reset'),
+        powered_on=dict(path='/powerState', value='On', msg=MSG_POWERED_ON, msg_no_changes=MSG_ALREADY_POWERED_ON),
+        powered_off=dict(path='/powerState', value='Off', msg=MSG_POWERED_OFF, msg_no_changes=MSG_ALREADY_POWERED_OFF),
+        uid_on=dict(path='/uidState', value='On', msg=MSG_UID_STATE_ON, msg_no_changes=MSG_UID_STATE_ALREADY_ON),
+        uid_off=dict(path='/uidState', value='Off', msg=MSG_UID_STATE_OFF, msg_no_changes=MSG_UID_STATE_ALREADY_OFF),
+        device_reset=dict(path='/deviceResetState', value='Reset', msg=MSG_RESET, msg_no_changes=None)
     )
 
     def __init__(self):
@@ -141,19 +153,20 @@ class InterconnectModule(OneViewModuleBase):
         state_name = self.module.params['state']
 
         if state_name == 'update_ports':
-            changed, resource = self.update_ports(interconnect)
+            changed, msg, resource = self.update_ports(interconnect)
         elif state_name == 'reset_port_protection':
-            changed, resource = self.reset_port_protection(interconnect)
+            changed, msg, resource = self.reset_port_protection(interconnect)
         else:
             state = self.states[state_name]
 
             if state_name == 'device_reset':
-                changed, resource = self.device_reset(state, interconnect)
+                changed, msg, resource = self.device_reset(state, interconnect)
             else:
-                changed, resource = self.change_state(state, interconnect)
+                changed, msg, resource = self.change_state(state, interconnect)
 
         return dict(
             changed=changed,
+            msg=msg,
             ansible_facts=dict(interconnect=resource)
         )
 
@@ -181,12 +194,15 @@ class InterconnectModule(OneViewModuleBase):
         if resource[property_name] != state['value']:
             resource = self.execute_operation(resource, state['path'], state['value'])
             changed = True
+            msg = state['msg']
+        else:
+            msg = state['msg_no_changes']
 
-        return changed, resource
+        return changed, msg, resource
 
     def device_reset(self, state, resource):
         updated_resource = self.execute_operation(resource, state['path'], state['value'])
-        return True, updated_resource
+        return True, self.MSG_RESET, updated_resource
 
     def execute_operation(self, resource, path, value, operation="replace"):
         return self.oneview_client.interconnects.patch(
@@ -200,18 +216,17 @@ class InterconnectModule(OneViewModuleBase):
         ports = self.module.params['ports']
 
         if not ports:
-            return False, resource
+            return False, self.MSG_PORTS_ALREADY_UPDATED, resource
 
         updated_resource = self.oneview_client.interconnects.update_ports(
             id_or_uri=resource["uri"],
             ports=ports
         )
-
-        return True, updated_resource
+        return True, self.MSG_PORTS_UPDATED, updated_resource
 
     def reset_port_protection(self, resource):
         updated_resource = self.oneview_client.interconnects.reset_port_protection(id_or_uri=resource['uri'])
-        return True, updated_resource
+        return True, self.MSG_RESET_PORT_PROTECTION, updated_resource
 
 
 def main():

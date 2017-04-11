@@ -65,7 +65,6 @@ from ansible.modules.cloud.hpe.oneview_firmware_driver import FirmwareDriverModu
 from ansible.modules.cloud.hpe.oneview_firmware_driver_facts import FirmwareDriverFactsModule
 from ansible.modules.cloud.hpe.oneview_interconnect import InterconnectModule
 from ansible.modules.cloud.hpe.oneview_interconnect_facts import InterconnectFactsModule
-from ansible.modules.cloud.hpe.oneview_interconnect_facts import EXAMPLES as EXAMPLES_INTERCONNECT_FACTS
 from ansible.modules.cloud.hpe.oneview_interconnect_link_topology_facts import InterconnectLinkTopologyFactsModule
 from ansible.modules.cloud.hpe.oneview_interconnect_type_facts import InterconnectTypeFactsModule
 # from ansible.modules.cloud.hpe.oneview_internal_link_set_facts import InternalLinkSetFactsModule
@@ -91,8 +90,8 @@ from ansible.modules.cloud.hpe.oneview_power_device import PowerDeviceModule
 from ansible.modules.cloud.hpe.oneview_power_device_facts import PowerDeviceFactsModule
 from ansible.modules.cloud.hpe.oneview_rack import RackModule
 from ansible.modules.cloud.hpe.oneview_rack_facts import RackFactsModule
-from ansible.modules.cloud.hpe.oneview_san_manager import SanManagerModule
-from ansible.modules.cloud.hpe.oneview_san_manager_facts import SanManagerFactsModule
+# from ansible.modules.cloud.hpe.oneview_san_manager import SanManagerModule
+# from ansible.modules.cloud.hpe.oneview_san_manager_facts import SanManagerFactsModule
 # from ansible.modules.cloud.hpe.oneview_sas_interconnect import SasInterconnectModule
 # from ansible.modules.cloud.hpe.oneview_sas_interconnect_facts import SasInterconnectFactsModule
 from ansible.modules.cloud.hpe.oneview_sas_interconnect_type_facts import SasInterconnectTypeFactsModule

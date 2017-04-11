@@ -101,6 +101,7 @@ class InterconnectModuleSpec(unittest.TestCase,
         )
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
+            msg=InterconnectModule.MSG_POWERED_ON,
             ansible_facts=dict(interconnect=fake_interconnect_updated)
         )
 
@@ -115,6 +116,7 @@ class InterconnectModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
+            msg=InterconnectModule.MSG_ALREADY_POWERED_ON,
             ansible_facts=dict(interconnect=fake_interconnect)
         )
 
@@ -137,7 +139,23 @@ class InterconnectModuleSpec(unittest.TestCase,
         )
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
+            msg=InterconnectModule.MSG_POWERED_OFF,
             ansible_facts=dict(interconnect=fake_interconnect_updated)
+        )
+
+    def test_should_return_changed_false_when_interconnect_is_already_powered_off(self):
+        ansible_arguments = create_params_for('powered_off')
+        self.mock_ansible_module.params = ansible_arguments
+
+        fake_interconnect = dict(powerState='Off')
+        self.mock_ov_client.interconnects.get_by.return_value = [fake_interconnect]
+
+        InterconnectModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=InterconnectModule.MSG_ALREADY_POWERED_OFF,
+            ansible_facts=dict(interconnect=fake_interconnect)
         )
 
     def test_should_ensure_uid_on_state(self):
@@ -159,6 +177,7 @@ class InterconnectModuleSpec(unittest.TestCase,
         )
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
+            msg=InterconnectModule.MSG_UID_STATE_ON,
             ansible_facts=dict(interconnect=fake_interconnect_updated)
         )
 
@@ -173,6 +192,7 @@ class InterconnectModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
+            msg=InterconnectModule.MSG_UID_STATE_ALREADY_ON,
             ansible_facts=dict(interconnect=fake_interconnect)
         )
 
@@ -195,7 +215,23 @@ class InterconnectModuleSpec(unittest.TestCase,
         )
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
+            msg=InterconnectModule.MSG_UID_STATE_OFF,
             ansible_facts=dict(interconnect=fake_interconnect_updated)
+        )
+
+    def test_should_return_changed_false_when_uid_is_already_off(self):
+        ansible_arguments = create_params_for('uid_off')
+        self.mock_ansible_module.params = ansible_arguments
+
+        fake_interconnect = dict(uidState='Off')
+        self.mock_ov_client.interconnects.get_by.return_value = [fake_interconnect]
+
+        InterconnectModule().run()
+
+        self.mock_ansible_module.exit_json.assert_called_once_with(
+            changed=False,
+            msg=InterconnectModule.MSG_UID_STATE_ALREADY_OFF,
+            ansible_facts=dict(interconnect=fake_interconnect)
         )
 
     def test_should_ensure_device_reset(self):
@@ -217,6 +253,7 @@ class InterconnectModuleSpec(unittest.TestCase,
         )
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
+            msg=InterconnectModule.MSG_RESET,
             ansible_facts=dict(interconnect=fake_interconnect)
         )
 
@@ -245,6 +282,7 @@ class InterconnectModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
+            msg=InterconnectModule.MSG_RESET,
             ansible_facts=dict(interconnect=fake_interconnect)
         )
 
@@ -273,6 +311,7 @@ class InterconnectModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
+            msg=InterconnectModule.MSG_PORTS_UPDATED,
             ansible_facts=dict(interconnect=fake_interconnect)
         )
 
@@ -290,6 +329,7 @@ class InterconnectModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
+            msg=InterconnectModule.MSG_RESET_PORT_PROTECTION,
             ansible_facts=dict(interconnect=fake_interconnect)
         )
 

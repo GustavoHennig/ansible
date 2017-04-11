@@ -21,7 +21,6 @@ import unittest
 import yaml
 
 from oneview_module_loader import InterconnectFactsModule
-from oneview_module_loader import EXAMPLES_INTERCONNECT_FACTS
 from hpe_test_utils import FactsParamsTestCase
 
 
@@ -79,7 +78,6 @@ class InterconnectFactsSpec(unittest.TestCase,
         self.interconnects = self.mock_ov_client.interconnects
         FactsParamsTestCase.configure_client_mock(self, self.interconnects)
 
-        self.EXAMPLES = yaml.load(EXAMPLES_INTERCONNECT_FACTS)
         self.PARAMS_GET_ALL_PORTS = self.EXAMPLES[18]['oneview_interconnect_facts']
         self.PARAMS_GET_PORT = self.EXAMPLES[21]['oneview_interconnect_facts']
 
