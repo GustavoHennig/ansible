@@ -95,7 +95,7 @@ from ansible.modules.cloud.hpe.oneview_rack_facts import RackFactsModule
 # from ansible.modules.cloud.hpe.oneview_sas_interconnect import SasInterconnectModule
 # from ansible.modules.cloud.hpe.oneview_sas_interconnect_facts import SasInterconnectFactsModule
 from ansible.modules.cloud.hpe.oneview_sas_interconnect_type_facts import SasInterconnectTypeFactsModule
-# from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect import SasLogicalInterconnectModule
+from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect import SasLogicalInterconnectModule
 # from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_facts import SasLogicalInterconnectFactsModule
 from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_group import SasLogicalInterconnectGroupModule
 from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_group_facts import SasLogicalInterconnectGroupFactsModule
