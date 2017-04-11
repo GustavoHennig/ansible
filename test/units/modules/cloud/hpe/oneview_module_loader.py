@@ -1,19 +1,22 @@
-###
-# Copyright (2017) Hewlett Packard Enterprise Development LP
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Copyright (2016-2017) Hewlett Packard Enterprise Development LP
 #
-# http://www.apache.org/licenses/LICENSE-2.0
+# This file is part of Ansible
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-###
-
+# Ansible is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Ansible is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 """
 This module was created because the code in this repository is shared with Ansible Core.
 So, to avoid merging issues, and maintaining the tests code equal, we create a unique file to
@@ -99,8 +102,8 @@ from ansible.modules.cloud.hpe.oneview_sas_interconnect_type_facts import SasInt
 # from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_facts import SasLogicalInterconnectFactsModule
 from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_group import SasLogicalInterconnectGroupModule
 from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_group_facts import SasLogicalInterconnectGroupFactsModule
-# from ansible.modules.cloud.hpe.oneview_sas_logical_jbod_attachment_facts import SasLogicalJbodAttachmentFactsModule
-# from ansible.modules.cloud.hpe.oneview_sas_logical_jbod_facts import SasLogicalJbodFactsModule
+from ansible.modules.cloud.hpe.oneview_sas_logical_jbod_attachment_facts import SasLogicalJbodAttachmentFactsModule
+from ansible.modules.cloud.hpe.oneview_sas_logical_jbod_facts import SasLogicalJbodFactsModule
 # from ansible.modules.cloud.hpe.oneview_scope import ScopeModule
 # from ansible.modules.cloud.hpe.oneview_scope_facts import ScopeFactsModule
 from ansible.modules.cloud.hpe.oneview_server_hardware import ServerHardwareModule
@@ -121,7 +124,7 @@ from ansible.modules.cloud.hpe.oneview_storage_volume_template import StorageVol
 from ansible.modules.cloud.hpe.oneview_storage_volume_template_facts import StorageVolumeTemplateFactsModule
 # from ansible.modules.cloud.hpe.oneview_switch import SwitchModule
 # from ansible.modules.cloud.hpe.oneview_switch_facts import SwitchFactsModule
-# from ansible.modules.cloud.hpe.oneview_switch_type_facts import SwitchTypeFactsModule
+from ansible.modules.cloud.hpe.oneview_switch_type_facts import SwitchTypeFactsModule
 # from ansible.modules.cloud.hpe.oneview_task_facts import TaskFactsModule
 # from ansible.modules.cloud.hpe.oneview_unmanaged_device import UnmanagedDeviceModule
 # from ansible.modules.cloud.hpe.oneview_unmanaged_device_facts import UnmanagedDeviceFactsModule
