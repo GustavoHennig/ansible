@@ -41,12 +41,12 @@ options:
       description:
         - "List with options to gather additional facts about Interconnect.
           Options allowed:
-          C('nameServers') gets the named servers for an interconnect.
-          C('statistics') gets the statistics from an interconnect.
-          C('portStatistics') gets the statistics for the specified port name on an interconnect.
-          C('subPortStatistics') gets the subport statistics on an interconnect.
-          C('ports') gets all interconnect ports.
-          C('port') gets a specific interconnect port."
+          C(nameServers) gets the named servers for an interconnect.
+          C(statistics) gets the statistics from an interconnect.
+          C(portStatistics) gets the statistics for the specified port name on an interconnect.
+          C(subPortStatistics) gets the subport statistics on an interconnect.
+          C(ports) gets all interconnect ports.
+          C(port) gets a specific interconnect port."
         - "To gather additional facts it is required inform the Interconnect name. Otherwise, these options will be
           ignored."
       required: false
