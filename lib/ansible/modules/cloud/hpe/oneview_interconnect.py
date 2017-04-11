@@ -37,13 +37,13 @@ options:
     state:
         description:
             - Indicates the desired state for the Interconnect resource.
-              C('powered_on') turns the power on.
-              C('powered_off') turns the power off.
-              C('uid_on') turns the UID light on.
-              C('uid_off') turns the UID light off.
-              C('device_reset') perform a device reset.
-              C('update_ports') updates the interconnect ports.
-              C('reset_port_protection') triggers a reset of port protection.
+              C(powered_on) turns the power on.
+              C(powered_off) turns the power off.
+              C(uid_on) turns the UID light on.
+              C(uid_off) turns the UID light off.
+              C(device_reset) perform a device reset.
+              C(update_ports) updates the interconnect ports.
+              C(reset_port_protection) triggers a reset of port protection.
         choices: [
             'powered_on',
             'powered_off',
@@ -63,7 +63,7 @@ options:
       required: false
     ports:
       description:
-        - List with ports to update. This option should be used together with C('update_ports') state.
+        - List with ports to update. This option should be used together with C(update_ports) state.
       required: false
 
 extends_documentation_fragment:
