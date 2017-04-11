@@ -101,7 +101,7 @@ class DeploymentPlanFactsModule(OneViewModuleBase):
         if name:
             deployment_plans = self.i3s_client.deployment_plans.get_by("name", name)
         else:
-            deployment_plans = self.i3s_client.deployment_plans.get_all(**self.params)
+            deployment_plans = self.i3s_client.deployment_plans.get_all(**self.facts_params)
 
         ansible_facts['deployment_plans'] = deployment_plans
 

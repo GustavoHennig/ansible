@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
 
-from ansible.modules.cloud.hpe.image_streamer_build_plan import BuildPlanModule, EXAMPLES
+from oneview_module_loader import BuildPlanModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -39,10 +38,9 @@ class BuildPlanSpec(unittest.TestCase,
         self.i3s = self.mock_ov_client.create_image_streamer_client()
 
         # Load scenarios from module examples
-        self.BUILD_PLAN_EXAMPLES = yaml.load(EXAMPLES)
-        self.BUILD_PLAN_CREATE = self.BUILD_PLAN_EXAMPLES[0]['image_streamer_build_plan']
-        self.BUILD_PLAN_UPDATE = self.BUILD_PLAN_EXAMPLES[1]['image_streamer_build_plan']
-        self.BUILD_PLAN_DELETE = self.BUILD_PLAN_EXAMPLES[2]['image_streamer_build_plan']
+        self.BUILD_PLAN_CREATE = self.EXAMPLES[0]['image_streamer_build_plan']
+        self.BUILD_PLAN_UPDATE = self.EXAMPLES[1]['image_streamer_build_plan']
+        self.BUILD_PLAN_DELETE = self.EXAMPLES[2]['image_streamer_build_plan']
 
     def test_should_create_new_build_plan(self):
         self.i3s.build_plans.get_by.return_value = []

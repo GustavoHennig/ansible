@@ -19,9 +19,8 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-import yaml
 
-from ansible.modules.cloud.hpe.image_streamer_deployment_plan import DeploymentPlanModule, EXAMPLES
+from oneview_module_loader import DeploymentPlanModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -39,10 +38,9 @@ class DeploymentPlanSpec(unittest.TestCase,
         self.i3s = self.mock_ov_client.create_image_streamer_client()
 
         # Load scenarios from module examples
-        self.DEPLOYMENT_PLAN_EXAMPLES = yaml.load(EXAMPLES)
-        self.DEPLOYMENT_PLAN_CREATE = self.DEPLOYMENT_PLAN_EXAMPLES[0]['image_streamer_deployment_plan']
-        self.DEPLOYMENT_PLAN_UPDATE = self.DEPLOYMENT_PLAN_EXAMPLES[1]['image_streamer_deployment_plan']
-        self.DEPLOYMENT_PLAN_DELETE = self.DEPLOYMENT_PLAN_EXAMPLES[2]['image_streamer_deployment_plan']
+        self.DEPLOYMENT_PLAN_CREATE = self.EXAMPLES[0]['image_streamer_deployment_plan']
+        self.DEPLOYMENT_PLAN_UPDATE = self.EXAMPLES[1]['image_streamer_deployment_plan']
+        self.DEPLOYMENT_PLAN_DELETE = self.EXAMPLES[2]['image_streamer_deployment_plan']
         self.DEPLOYMENT_PLAN = dict(
             name="Deployment Plan name",
             uri="/rest/deployment-plans/d1c7b09a-6c7b-4ae0-b68e-ed208ccde1b0")

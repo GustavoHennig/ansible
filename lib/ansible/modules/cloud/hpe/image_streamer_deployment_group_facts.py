@@ -100,7 +100,7 @@ class DeploymentGroupFactsModule(OneViewModuleBase):
         if name:
             deployment_groups = self.i3s_client.deployment_groups.get_by('name', name)
         else:
-            deployment_groups = self.i3s_client.deployment_groups.get_all(**self.params)
+            deployment_groups = self.i3s_client.deployment_groups.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(deployment_groups=deployment_groups))
 

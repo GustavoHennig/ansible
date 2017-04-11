@@ -37,8 +37,8 @@ options:
     state:
         description:
             - Indicates the desired state for the Deployment Plan resource.
-              C(present) will ensure data properties are compliant with OneView.
-              C(absent) will remove the resource from OneView, if it exists.
+              C(present) will ensure data properties are compliant with Synergy Image Streamer.
+              C(absent) will remove the resource from Synergy Image Streamer, if it exists.
         choices: ['present', 'absent']
         required: true
     data:

@@ -99,7 +99,7 @@ class OsVolumeFactsModule(OneViewModuleBase):
         if name:
             os_volumes = self.i3s_client.os_volumes.get_by('name', name)
         else:
-            os_volumes = self.i3s_client.os_volumes.get_all(**self.params)
+            os_volumes = self.i3s_client.os_volumes.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(os_volumes=os_volumes))
 

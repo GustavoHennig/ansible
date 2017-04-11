@@ -101,7 +101,7 @@ class PlanScriptFactsModule(OneViewModuleBase):
         if name:
             plan_scripts = self.i3s_client.plan_scripts.get_by("name", name)
         else:
-            plan_scripts = self.i3s_client.plan_scripts.get_all(**self.params)
+            plan_scripts = self.i3s_client.plan_scripts.get_all(**self.facts_params)
 
         ansible_facts['plan_scripts'] = plan_scripts
 

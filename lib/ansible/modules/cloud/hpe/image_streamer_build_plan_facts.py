@@ -99,7 +99,7 @@ class BuildPlanFactsModule(OneViewModuleBase):
         if name:
             build_plans = self.i3s_client.build_plans.get_by("name", name)
         else:
-            build_plans = self.i3s_client.build_plans.get_all(**self.params)
+            build_plans = self.i3s_client.build_plans.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(build_plans=build_plans))
 

@@ -31,16 +31,16 @@ from ansible.module_utils.oneview import (HPOneViewException,
                                   ResourceComparator)
 # from ansible.modules.cloud.hpe.image_streamer_artifact_bundle import ArtifactBundleModule
 # from ansible.modules.cloud.hpe.image_streamer_artifact_bundle_facts import ArtifactBundleFactsModule
-# from ansible.modules.cloud.hpe.image_streamer_build_plan import BuildPlanModule
-# from ansible.modules.cloud.hpe.image_streamer_build_plan_facts import BuildPlanFactsModule
-# from ansible.modules.cloud.hpe.image_streamer_deployment_group_facts import DeploymentGroupFactsModule
-# from ansible.modules.cloud.hpe.image_streamer_deployment_plan import DeploymentPlanModule
-# from ansible.modules.cloud.hpe.image_streamer_deployment_plan_facts import DeploymentPlanFactsModule
-# from ansible.modules.cloud.hpe.image_streamer_golden_image import GoldenImageModule
-# from ansible.modules.cloud.hpe.image_streamer_golden_image_facts import GoldenImageFactsModule
-# from ansible.modules.cloud.hpe.image_streamer_os_volume_facts import OsVolumeFactsModule
-# from ansible.modules.cloud.hpe.image_streamer_plan_script import PlanScriptModule
-# from ansible.modules.cloud.hpe.image_streamer_plan_script_facts import PlanScriptFactsModule
+from ansible.modules.cloud.hpe.image_streamer_build_plan import BuildPlanModule
+from ansible.modules.cloud.hpe.image_streamer_build_plan_facts import BuildPlanFactsModule
+from ansible.modules.cloud.hpe.image_streamer_deployment_group_facts import DeploymentGroupFactsModule
+from ansible.modules.cloud.hpe.image_streamer_deployment_plan import DeploymentPlanModule
+from ansible.modules.cloud.hpe.image_streamer_deployment_plan_facts import DeploymentPlanFactsModule
+from ansible.modules.cloud.hpe.image_streamer_golden_image import GoldenImageModule
+from ansible.modules.cloud.hpe.image_streamer_golden_image_facts import GoldenImageFactsModule
+from ansible.modules.cloud.hpe.image_streamer_os_volume_facts import OsVolumeFactsModule
+from ansible.modules.cloud.hpe.image_streamer_plan_script import PlanScriptModule
+from ansible.modules.cloud.hpe.image_streamer_plan_script_facts import PlanScriptFactsModule
 from ansible.modules.cloud.hpe.oneview_alert_facts import AlertFactsModule
 from ansible.modules.cloud.hpe.oneview_connection_template import ConnectionTemplateModule
 from ansible.modules.cloud.hpe.oneview_connection_template_facts import ConnectionTemplateFactsModule
