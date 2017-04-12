@@ -80,8 +80,8 @@ from ansible.modules.cloud.hpe.oneview_logical_interconnect_group import Logical
 from ansible.modules.cloud.hpe.oneview_logical_interconnect_group_facts import LogicalInterconnectGroupFactsModule
 # from ansible.modules.cloud.hpe.oneview_logical_switch import LogicalSwitchModule
 # from ansible.modules.cloud.hpe.oneview_logical_switch_facts import LogicalSwitchFactsModule
-# from ansible.modules.cloud.hpe.oneview_logical_switch_group import LogicalSwitchGroupModule
-# from ansible.modules.cloud.hpe.oneview_logical_switch_group_facts import LogicalSwitchGroupFactsModule
+from ansible.modules.cloud.hpe.oneview_logical_switch_group import LogicalSwitchGroupModule
+from ansible.modules.cloud.hpe.oneview_logical_switch_group_facts import LogicalSwitchGroupFactsModule
 from ansible.modules.cloud.hpe.oneview_managed_san import ManagedSanModule
 from ansible.modules.cloud.hpe.oneview_managed_san_facts import ManagedSanFactsModule
 from ansible.modules.cloud.hpe.oneview_network_set import NetworkSetModule
