@@ -128,7 +128,7 @@ from ansible.modules.cloud.hpe.oneview_switch_type_facts import SwitchTypeFactsM
 # from ansible.modules.cloud.hpe.oneview_task_facts import TaskFactsModule
 # from ansible.modules.cloud.hpe.oneview_unmanaged_device import UnmanagedDeviceModule
 # from ansible.modules.cloud.hpe.oneview_unmanaged_device_facts import UnmanagedDeviceFactsModule
-# from ansible.modules.cloud.hpe.oneview_uplink_set import UplinkSetModule
-# from ansible.modules.cloud.hpe.oneview_uplink_set_facts import UplinkSetFactsModule
+from ansible.modules.cloud.hpe.oneview_uplink_set import UplinkSetModule
+from ansible.modules.cloud.hpe.oneview_uplink_set_facts import UplinkSetFactsModule
 from ansible.modules.cloud.hpe.oneview_volume import VolumeModule
 from ansible.modules.cloud.hpe.oneview_volume_facts import VolumeFactsModule
