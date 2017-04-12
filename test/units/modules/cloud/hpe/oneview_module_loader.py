@@ -104,8 +104,8 @@ from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_group import Sas
 from ansible.modules.cloud.hpe.oneview_sas_logical_interconnect_group_facts import SasLogicalInterconnectGroupFactsModule
 from ansible.modules.cloud.hpe.oneview_sas_logical_jbod_attachment_facts import SasLogicalJbodAttachmentFactsModule
 from ansible.modules.cloud.hpe.oneview_sas_logical_jbod_facts import SasLogicalJbodFactsModule
-# from ansible.modules.cloud.hpe.oneview_scope import ScopeModule
-# from ansible.modules.cloud.hpe.oneview_scope_facts import ScopeFactsModule
+from ansible.modules.cloud.hpe.oneview_scope import ScopeModule
+from ansible.modules.cloud.hpe.oneview_scope_facts import ScopeFactsModule
 from ansible.modules.cloud.hpe.oneview_server_hardware import ServerHardwareModule
 from ansible.modules.cloud.hpe.oneview_server_hardware_facts import ServerHardwareFactsModule
 # from ansible.modules.cloud.hpe.oneview_server_hardware_type import ServerHardwareTypeModule
