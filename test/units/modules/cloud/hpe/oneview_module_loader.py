@@ -78,7 +78,7 @@ from ansible.modules.cloud.hpe.oneview_logical_interconnect import LogicalInterc
 from ansible.modules.cloud.hpe.oneview_logical_interconnect_facts import LogicalInterconnectFactsModule
 from ansible.modules.cloud.hpe.oneview_logical_interconnect_group import LogicalInterconnectGroupModule
 from ansible.modules.cloud.hpe.oneview_logical_interconnect_group_facts import LogicalInterconnectGroupFactsModule
-# from ansible.modules.cloud.hpe.oneview_logical_switch import LogicalSwitchModule
+from ansible.modules.cloud.hpe.oneview_logical_switch import LogicalSwitchModule
 # from ansible.modules.cloud.hpe.oneview_logical_switch_facts import LogicalSwitchFactsModule
 from ansible.modules.cloud.hpe.oneview_logical_switch_group import LogicalSwitchGroupModule
 from ansible.modules.cloud.hpe.oneview_logical_switch_group_facts import LogicalSwitchGroupFactsModule
