@@ -32,8 +32,8 @@ from ansible.module_utils.oneview import (HPOneViewException,
                                   ServerProfileMerger,
                                   ServerProfileReplaceNamesByUris,
                                   ResourceComparator)
-# from ansible.modules.cloud.hpe.image_streamer_artifact_bundle import ArtifactBundleModule
-# from ansible.modules.cloud.hpe.image_streamer_artifact_bundle_facts import ArtifactBundleFactsModule
+from ansible.modules.cloud.hpe.image_streamer_artifact_bundle import ArtifactBundleModule
+from ansible.modules.cloud.hpe.image_streamer_artifact_bundle_facts import ArtifactBundleFactsModule
 from ansible.modules.cloud.hpe.image_streamer_build_plan import BuildPlanModule
 from ansible.modules.cloud.hpe.image_streamer_build_plan_facts import BuildPlanFactsModule
 from ansible.modules.cloud.hpe.image_streamer_deployment_group_facts import DeploymentGroupFactsModule
