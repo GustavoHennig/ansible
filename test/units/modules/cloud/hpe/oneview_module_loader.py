@@ -70,7 +70,7 @@ from ansible.modules.cloud.hpe.oneview_interconnect import InterconnectModule
 from ansible.modules.cloud.hpe.oneview_interconnect_facts import InterconnectFactsModule
 from ansible.modules.cloud.hpe.oneview_interconnect_link_topology_facts import InterconnectLinkTopologyFactsModule
 from ansible.modules.cloud.hpe.oneview_interconnect_type_facts import InterconnectTypeFactsModule
-# from ansible.modules.cloud.hpe.oneview_internal_link_set_facts import InternalLinkSetFactsModule
+from ansible.modules.cloud.hpe.oneview_internal_link_set_facts import InternalLinkSetFactsModule
 # from ansible.modules.cloud.hpe.oneview_logical_downlinks_facts import LogicalDownlinksFactsModule
 from ansible.modules.cloud.hpe.oneview_logical_enclosure import LogicalEnclosureModule
 from ansible.modules.cloud.hpe.oneview_logical_enclosure_facts import LogicalEnclosureFactsModule
