@@ -19,7 +19,7 @@
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-from ansible.modules.cloud.hpe.oneview_storage_pool_facts import StoragePoolFactsModule
+from oneview_module_loader import StoragePoolFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'

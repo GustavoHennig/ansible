@@ -41,7 +41,7 @@ options:
     options:
       description:
         - "List with options to gather additional facts about Volume and related resources.
-          Options allowed: C(attachableVolumes, C(extraManagedVolumePaths), and C(snapshots). For the option
+          Options allowed: C(attachableVolumes), C(extraManagedVolumePaths), and C(snapshots). For the option
           C(snapshots), you may provide a name."
       required: false
 extends_documentation_fragment:

@@ -112,7 +112,7 @@ class EnclosureGroupPresentStateSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=EnclosureGroupModule.MSG_ALREADY_EXIST,
+            msg=EnclosureGroupModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(enclosure_group=DICT_DEFAULT_ENCLOSURE_GROUP)
         )
 
@@ -167,7 +167,7 @@ class EnclosureGroupPresentStateSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=EnclosureGroupModule.MSG_ALREADY_EXIST,
+            msg=EnclosureGroupModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(enclosure_group=data_merged)
         )
 

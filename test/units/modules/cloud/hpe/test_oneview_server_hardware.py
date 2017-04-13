@@ -21,7 +21,7 @@
 import unittest
 import yaml
 
-from ansible.modules.cloud.hpe.oneview_server_hardware import ServerHardwareModule
+from oneview_module_loader import ServerHardwareModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -139,7 +139,7 @@ class ServerHardwareModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=ServerHardwareModule.MSG_ALREADY_ADDED,
+            msg=ServerHardwareModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(server_hardware={"name": "name"})
         )
 

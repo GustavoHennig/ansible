@@ -20,7 +20,7 @@
 
 
 import unittest
-from ansible.modules.cloud.hpe.oneview_storage_system_facts import StorageSystemFactsModule
+from oneview_module_loader import StorageSystemFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'

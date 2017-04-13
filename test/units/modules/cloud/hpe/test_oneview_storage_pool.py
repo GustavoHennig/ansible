@@ -21,7 +21,7 @@
 import unittest
 import yaml
 
-from ansible.modules.cloud.hpe.oneview_storage_pool import StoragePoolModule
+from oneview_module_loader import StoragePoolModule
 from hpe_test_utils import OneViewBaseTestCase
 
 FAKE_MSG_ERROR = 'Fake message error'
@@ -65,7 +65,7 @@ class StoragePoolModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=True,
-            msg=StoragePoolModule.MSG_ADDED,
+            msg=StoragePoolModule.MSG_CREATED,
             ansible_facts=dict(storage_pool={"name": "name"})
         )
 
@@ -77,7 +77,7 @@ class StoragePoolModuleSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=StoragePoolModule.MSG_ALREADY_ADDED,
+            msg=StoragePoolModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(storage_pool=DICT_DEFAULT_STORAGE_POOL)
         )
 

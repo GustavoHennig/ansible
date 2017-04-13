@@ -93,7 +93,7 @@ from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewValueError,
 class StorageSystemModule(OneViewModuleBase):
     MSG_ADDED = 'Storage System added successfully.'
     MSG_UPDATED = 'Storage System updated successfully.'
-    MSG_ALREADY_UPDATED = 'Storage System is already updated.'
+    MSG_ALREADY_PRESENT = 'Storage System is already present.'
     MSG_DELETED = 'Storage System deleted successfully.'
     MSG_ALREADY_ABSENT = 'Storage System is already absent.'
     MSG_MANDATORY_FIELDS_MISSING = 'At least one mandatory field must be provided: name or credentials.ip_hostname.'
@@ -147,7 +147,7 @@ class StorageSystemModule(OneViewModuleBase):
                 changed = True
                 msg = self.MSG_UPDATED
         else:
-            msg = self.MSG_ALREADY_UPDATED
+            msg = self.MSG_ALREADY_PRESENT
 
         return dict(changed=changed,
                     msg=msg,

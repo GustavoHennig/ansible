@@ -22,7 +22,7 @@
 import unittest
 
 from hpe_test_utils import OneViewBaseTestCase
-from ansible.modules.cloud.hpe.oneview_storage_volume_template import StorageVolumeTemplateModule
+from oneview_module_loader import StorageVolumeTemplateModule
 
 FAKE_MSG_ERROR = 'Fake message error'
 
@@ -112,7 +112,7 @@ class StorageVolumeTemplatePresentStateSpec(unittest.TestCase,
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=StorageVolumeTemplateModule.MSG_ALREADY_EXIST,
+            msg=StorageVolumeTemplateModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(storage_volume_template=STORAGE_VOLUME_TEMPLATE)
         )
 

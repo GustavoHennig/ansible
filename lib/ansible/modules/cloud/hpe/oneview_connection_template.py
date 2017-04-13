@@ -80,7 +80,7 @@ from ansible.module_utils.oneview import (OneViewModuleBase,
 class ConnectionTemplateModule(OneViewModuleBase):
     MSG_UPDATED = 'Connection Template updated successfully.'
     MSG_NOT_FOUND = 'Connection Template was not found.'
-    MSG_ALREADY_EXIST = 'Connection Template is already updated.'
+    MSG_ALREADY_PRESENT = 'Connection Template is already updated.'
     MSG_MANDATORY_FIELD_MISSING = 'Mandatory field was not informed: data.name'
 
     def __init__(self):
@@ -128,7 +128,7 @@ class ConnectionTemplateModule(OneViewModuleBase):
                 changed = True
                 msg = self.MSG_UPDATED
             else:
-                msg = self.MSG_ALREADY_EXIST
+                msg = self.MSG_ALREADY_PRESENT
 
         return changed, msg, dict(connection_template=resource)
 
