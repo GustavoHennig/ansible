@@ -49,8 +49,8 @@ from ansible.modules.cloud.hpe.oneview_connection_template import ConnectionTemp
 from ansible.modules.cloud.hpe.oneview_connection_template_facts import ConnectionTemplateFactsModule
 from ansible.modules.cloud.hpe.oneview_datacenter import DatacenterModule
 from ansible.modules.cloud.hpe.oneview_datacenter_facts import DatacenterFactsModule
-# from ansible.modules.cloud.hpe.oneview_drive_enclosure import DriveEnclosureModule
-# from ansible.modules.cloud.hpe.oneview_drive_enclosure_facts import DriveEnclosureFactsModule
+from ansible.modules.cloud.hpe.oneview_drive_enclosure import DriveEnclosureModule
+from ansible.modules.cloud.hpe.oneview_drive_enclosure_facts import DriveEnclosureFactsModule
 from ansible.modules.cloud.hpe.oneview_enclosure import EnclosureModule
 from ansible.modules.cloud.hpe.oneview_enclosure_facts import EnclosureFactsModule
 from ansible.modules.cloud.hpe.oneview_enclosure_group import EnclosureGroupModule
