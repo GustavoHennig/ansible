@@ -108,8 +108,8 @@ from ansible.modules.cloud.hpe.oneview_scope import ScopeModule
 from ansible.modules.cloud.hpe.oneview_scope_facts import ScopeFactsModule
 from ansible.modules.cloud.hpe.oneview_server_hardware import ServerHardwareModule
 from ansible.modules.cloud.hpe.oneview_server_hardware_facts import ServerHardwareFactsModule
-# from ansible.modules.cloud.hpe.oneview_server_hardware_type import ServerHardwareTypeModule
-# from ansible.modules.cloud.hpe.oneview_server_hardware_type_facts import ServerHardwareTypeFactsModule
+from ansible.modules.cloud.hpe.oneview_server_hardware_type import ServerHardwareTypeModule
+from ansible.modules.cloud.hpe.oneview_server_hardware_type_facts import ServerHardwareTypeFactsModule
 from ansible.modules.cloud.hpe.oneview_server_profile import ServerProfileModule
 from ansible.modules.cloud.hpe.oneview_server_profile_facts import ServerProfileFactsModule
 from ansible.modules.cloud.hpe.oneview_server_profile_template import ServerProfileTemplateModule
