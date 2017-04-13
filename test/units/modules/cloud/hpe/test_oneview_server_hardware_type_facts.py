@@ -64,5 +64,6 @@ class ServerHardwareTypeFactsSpec(unittest.TestCase,
             ansible_facts=dict(server_hardware_types=([{"name": "Server Hardware Type Name"}]))
         )
 
+
 if __name__ == '__main__':
     unittest.main()
