@@ -21,7 +21,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_volume_facts import VolumeFactsModule
+from oneview_module_loader import VolumeFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'

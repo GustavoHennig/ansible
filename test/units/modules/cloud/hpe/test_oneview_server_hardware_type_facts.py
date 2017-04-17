@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_server_hardware_type_facts import ServerHardwareTypeFactsModule
+from oneview_module_loader import ServerHardwareTypeFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 ERROR_MSG = 'Fake message error'

@@ -41,8 +41,8 @@ options:
             - Indicates the desired state for the Volume resource.
               C(present) creates/adds the resource when it does not exist, otherwise it updates the resource. When the
               resource already exists, the update operation is non-idempotent, since it is always called even though
-              the given options are compliant with the existent data. To change the name of the volume, a 'newName' in
-              the data must be provided.
+              the given options are compliant with the existent data. To change the name of the volume, a C(newName) in
+              the I(data) must be provided.
               C(absent) by default deletes a volume from OneView and the storage system. When export_only is True, the
               volume is removed only from OneView.
               C(repaired) removes extra presentations from a specified volume on the storage system. This operation is
@@ -188,7 +188,7 @@ class VolumeModule(OneViewModuleBase):
     MSG_SNAPSHOT_DELETED = 'Volume snapshot deleted successfully.'
     MSG_NOT_FOUND = 'Volume not found.'
     MSG_SNAPSHOT_NOT_FOUND = 'Snapshot not found.'
-    MSG_ALREADY_ABSENT = 'Nothing to do.'
+    MSG_ALREADY_ABSENT = 'Volume is already absent.'
     MSG_NO_OPTIONS_PROVIDED = 'No options provided.'
     MSG_NEW_NAME_INVALID = 'Rename failed: the new name provided is being used by another Volume.'
 

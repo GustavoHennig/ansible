@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_switch import SwitchModule
+from oneview_module_loader import SwitchModule
 from hpe_test_utils import OneViewBaseTestCase
 
 SWITCH_NAME = "172.18.16.2"

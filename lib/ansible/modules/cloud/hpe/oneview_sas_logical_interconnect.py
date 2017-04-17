@@ -27,7 +27,7 @@ DOCUMENTATION = '''
 module: oneview_sas_logical_interconnect
 short_description: Manage OneView SAS Logical Interconnect resources.
 description:
-    - Provides an interface to manage SAS Logical Interconnect resources.
+    - "Provides an interface to manage SAS Logical Interconnect resources."
 version_added: "2.3"
 requirements:
     - "python >= 2.7.9"

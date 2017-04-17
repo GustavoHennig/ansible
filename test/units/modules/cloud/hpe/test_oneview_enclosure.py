@@ -254,7 +254,7 @@ class EnclosureSpec(unittest.TestCase, OneViewBaseTestCase):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=EnclosureModule.MSG_ALREADY_EXIST,
+            msg=EnclosureModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(enclosure=ENCLOSURE_FROM_ONEVIEW)
         )
 
@@ -270,7 +270,7 @@ class EnclosureSpec(unittest.TestCase, OneViewBaseTestCase):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=EnclosureModule.MSG_ALREADY_EXIST,
+            msg=EnclosureModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(enclosure=ENCLOSURE_FROM_ONEVIEW)
         )
 
@@ -284,7 +284,7 @@ class EnclosureSpec(unittest.TestCase, OneViewBaseTestCase):
 
         self.mock_ansible_module.exit_json.assert_called_once_with(
             changed=False,
-            msg=EnclosureModule.MSG_ALREADY_EXIST,
+            msg=EnclosureModule.MSG_ALREADY_PRESENT,
             ansible_facts=dict(enclosure=ENCLOSURE_FROM_ONEVIEW)
         )
 
