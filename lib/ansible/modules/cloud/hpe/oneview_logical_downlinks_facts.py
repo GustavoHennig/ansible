@@ -85,7 +85,7 @@ EXAMPLES = '''
 '''
 
 RETURN = '''
-logical_interconnects:
+logical_downlinks:
     description: The list of logical downlinks.
     returned: Always, but can be null.
     type: list
@@ -111,10 +111,14 @@ class LogicalDownlinksFactsModule(OneViewModuleBase):
         logical_downlinks = None
 
         if name and excludeEthernet:
-            logical_downlink_by_name = self.get_by_name(name)
             logical_downlinks = []
+            logical_downlink_by_name = self.get_by_name(name)
             if logical_downlink_by_name:
-                logical_downlinks = self.resource_client.get_without_ethernet(id_or_uri=logical_downlink_by_name["uri"])
+                uri = logical_downlink_by_name["uri"]
+                logical_downlink_without_ethernet = self.resource_client.get_without_ethernet(id_or_uri=uri)
+                if logical_downlink_without_ethernet:
+                    logical_downlinks = [logical_downlink_without_ethernet]
+
         elif name:
             logical_downlinks = self.resource_client.get_by('name', name)
         elif excludeEthernet:
