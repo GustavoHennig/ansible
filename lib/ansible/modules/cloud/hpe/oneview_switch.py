@@ -64,6 +64,8 @@ EXAMPLES = '''
     name: "172.18.16.2"
 '''
 
+RETURN = ''' # '''
+
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewValueError, HPOneViewResourceNotFound
 
