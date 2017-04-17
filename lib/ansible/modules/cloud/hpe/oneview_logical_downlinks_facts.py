@@ -111,22 +111,18 @@ class LogicalDownlinksFactsModule(OneViewModuleBase):
         logical_downlinks = None
 
         if name and excludeEthernet:
-            logical_downlinks_by_name = self.__get_by_name(name)
+            logical_downlink_by_name = self.get_by_name(name)
             logical_downlinks = []
-            if logical_downlinks_by_name:
-                logical_downlink = logical_downlinks_by_name[0]
-                logical_downlinks = self.resource_client.get_without_ethernet(id_or_uri=logical_downlink["uri"])
+            if logical_downlink_by_name:
+                logical_downlinks = self.resource_client.get_without_ethernet(id_or_uri=logical_downlink_by_name["uri"])
         elif name:
-            logical_downlinks = self.__get_by_name(name)
+            logical_downlinks = self.resource_client.get_by('name', name)
         elif excludeEthernet:
             logical_downlinks = self.resource_client.get_all_without_ethernet()
         else:
             logical_downlinks = self.resource_client.get_all(**self.facts_params)
 
         return dict(changed=False, ansible_facts=dict(logical_downlinks=logical_downlinks))
-
-    def __get_by_name(self, name):
-        return self.resource_client.get_by('name', name)
 
 
 def main():

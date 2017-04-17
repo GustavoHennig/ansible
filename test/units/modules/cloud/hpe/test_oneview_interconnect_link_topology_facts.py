@@ -20,7 +20,7 @@
 
 import unittest
 
-from ansible.modules.cloud.hpe.oneview_interconnect_link_topology_facts import InterconnectLinkTopologyFactsModule
+from oneview_module_loader import InterconnectLinkTopologyFactsModule
 from hpe_test_utils import FactsParamsTestCase
 
 
