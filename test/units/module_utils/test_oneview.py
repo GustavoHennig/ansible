@@ -38,7 +38,7 @@ MSG_GENERIC = "Generic message"
 
 class OneViewModuleBaseSpec(unittest.TestCase):
     """
-    PreloadedMocksBaseTestCase provides the mocks used in this test case.
+    OneViewModuleBaseSpec provides the mocks used in this test case.
     """
     mock_ov_client_from_json_file = None
     mock_ov_client_from_env_vars = None
@@ -2191,8 +2191,9 @@ class ServerProfileMergerTest(unittest.TestCase):
 
         merged_data = ServerProfileMerger().merge_data(resource, data)
 
-        list1 = list.sort(merged_data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES])
-        list2 = list.sort(deepcopy(self.profile_with_os_deployment)[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES])
+        list1 = sorted(merged_data[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES], key=ResourceComparator._str_sorted)
+        list2 = sorted(deepcopy(self.profile_with_os_deployment)[SPKeys.OS_DEPLOYMENT][SPKeys.ATTRIBUTES],
+                       key=ResourceComparator._str_sorted)
 
         self.assertEqual(list1, list2)
 
