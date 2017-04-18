@@ -77,6 +77,8 @@ EXAMPLES = '''
     name: "0000A66101, interconnect 1"
 '''
 
+RETURN = ''' # '''
+
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.oneview import OneViewModuleBase, HPOneViewResourceNotFound
 
