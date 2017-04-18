@@ -185,9 +185,7 @@ class ServerProfileModuleSpec(unittest.TestCase,
                               OneViewBaseTestCase):
     """
     Test the module constructor
-    ModuleContructorTestCase has common tests for class constructor and main function
-
-    ErrorHandlingTestCase has common tests for the module error handling.
+    OneViewBaseTestCase has common tests for class constructor and main function.
     """
 
     def setUp(self):
