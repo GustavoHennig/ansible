@@ -57,6 +57,8 @@ from ansible.modules.cloud.hpe.oneview_enclosure_group import EnclosureGroupModu
 from ansible.modules.cloud.hpe.oneview_enclosure_group_facts import EnclosureGroupFactsModule
 from ansible.modules.cloud.hpe.oneview_ethernet_network import EthernetNetworkModule
 from ansible.modules.cloud.hpe.oneview_ethernet_network_facts import EthernetNetworkFactsModule
+from ansible.modules.cloud.hpe.oneview_event import EventModule
+from ansible.modules.cloud.hpe.oneview_event_facts import EventFactsModule
 from ansible.modules.cloud.hpe.oneview_fabric import FabricModule
 from ansible.modules.cloud.hpe.oneview_fabric_facts import FabricFactsModule
 from ansible.modules.cloud.hpe.oneview_fc_network import FcNetworkModule
