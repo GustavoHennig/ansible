@@ -45,6 +45,10 @@ from ansible.modules.cloud.hpe.image_streamer_os_volume_facts import OsVolumeFac
 from ansible.modules.cloud.hpe.image_streamer_plan_script import PlanScriptModule
 from ansible.modules.cloud.hpe.image_streamer_plan_script_facts import PlanScriptFactsModule
 from ansible.modules.cloud.hpe.oneview_alert_facts import AlertFactsModule
+from ansible.modules.cloud.hpe.oneview_appliance_time_and_locale_configuration_facts \
+    import ApplianceTimeAndLocaleConfigurationFactsModule
+from ansible.modules.cloud.hpe.oneview_appliance_time_and_locale_configuration \
+    import ApplianceTimeAndLocaleConfigurationModule
 from ansible.modules.cloud.hpe.oneview_connection_template import ConnectionTemplateModule
 from ansible.modules.cloud.hpe.oneview_connection_template_facts import ConnectionTemplateFactsModule
 from ansible.modules.cloud.hpe.oneview_datacenter import DatacenterModule
