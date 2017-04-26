@@ -18,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible. If not, see <http://www.gnu.org/licenses/>.
 
+
 ANSIBLE_METADATA = {'metadata_version': '1.0',
                     'status': ['stableinterface'],
                     'supported_by': 'curated'}
@@ -56,12 +57,11 @@ EXAMPLES = '''
     data:
       description: "This is a very simple test event"
       eventTypeID: "hp.justATest"
-      eventDetails: [{
-                      eventItemName: "ipv4Address",
-                      eventItemValue: "198.51.100.5",
-                      isThisVarbindData: "false",
-                      varBindOrderIndex: -1
-                      }]
+      eventDetails:
+        - eventItemName: ipv4Address
+          eventItemValue: 198.51.100.5
+          isThisVarbindData: false
+          varBindOrderIndex: -1
 '''
 
 RETURN = '''
@@ -77,7 +77,6 @@ from ansible.module_utils.oneview import OneViewModuleBase
 
 class EventModule(OneViewModuleBase):
     MSG_CREATED = 'Event created successfully.'
-    RESOURCE_FACT_NAME = 'event'
 
     def __init__(self):
         additional_arg_spec = dict(data=dict(required=True, type='dict'),
@@ -90,8 +89,6 @@ class EventModule(OneViewModuleBase):
         self.resource_client = self.oneview_client.events
 
     def execute_module(self):
-        resource = None
-
         if self.state == 'present':
             resource = self.resource_client.create(self.data)
             return dict(changed=True, msg=self.MSG_CREATED, ansible_facts=dict(event=resource))
