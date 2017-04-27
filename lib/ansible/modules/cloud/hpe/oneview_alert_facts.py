@@ -3,20 +3,18 @@
 #
 # Copyright (2016-2017) Hewlett Packard Enterprise Development LP
 #
-# This file is part of Ansible
-#
-# Ansible is free software: you can redistribute it and/or modify
+# This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# Ansible is distributed in the hope that it will be useful,
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Ansible. If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ANSIBLE_METADATA = {'status': ['stableinterface'],
                     'supported_by': 'curated',
@@ -27,7 +25,7 @@ module: oneview_alert_facts
 short_description: Retrieve facts about the OneView Alerts.
 description:
     - Retrieve facts about the OneView Alerts.
-version_added: "2.3"
+version_added: "2.4"
 requirements:
     - "python >= 2.7.9"
     - "hpOneView >= 3.0.0"

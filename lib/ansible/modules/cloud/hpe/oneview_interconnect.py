@@ -3,20 +3,18 @@
 #
 # Copyright (2016-2017) Hewlett Packard Enterprise Development LP
 #
-# This file is part of Ansible
-#
-# Ansible is free software: you can redistribute it and/or modify
+# This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# Ansible is distributed in the hope that it will be useful,
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Ansible. If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 ANSIBLE_METADATA = {'metadata_version': '1.0',
                     'status': ['stableinterface'],
                     'supported_by': 'curated'}
@@ -25,7 +23,7 @@ DOCUMENTATION = '''
 ---
 module: oneview_interconnect
 short_description: Manage the OneView Interconnect resources.
-version_added: "2.3"
+version_added: "2.4"
 description:
     - Provides an interface to manage Interconnect resources. Can change the power state, UID light state, perform
       device reset, reset port protection, and update the interconnect ports.
